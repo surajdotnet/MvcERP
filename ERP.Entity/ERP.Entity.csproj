@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class1.cs" />
     <Compile Include="dbConnection.cs" />
     <Compile Include="LoginViewModel.cs" />
     <Compile Include="Models\DataModel.Context.cs">
