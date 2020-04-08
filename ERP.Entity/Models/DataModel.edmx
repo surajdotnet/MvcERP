@@ -1,0 +1,609 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ERPDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_MstAccessMainMenu">
+          <Key>
+            <PropertyRef Name="pkMainMenuId" />
+          </Key>
+          <Property Name="pkMainMenuId" Type="int" Nullable="false" />
+          <Property Name="MenuName" Type="nvarchar(max)" />
+          <Property Name="fkPageId" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsActive" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_MstAccessPages">
+          <Key>
+            <PropertyRef Name="pkPageId" />
+          </Key>
+          <Property Name="pkPageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PageName" Type="nvarchar" MaxLength="250" />
+          <Property Name="PageUrl" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsActive" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_MstAccessSubMenu">
+          <Key>
+            <PropertyRef Name="pkSubMenuId" />
+          </Key>
+          <Property Name="pkSubMenuId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fkMenuId" Type="int" />
+          <Property Name="SubMenuName" Type="nvarchar" MaxLength="500" />
+          <Property Name="fkPageId" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifedDate" Type="datetime" />
+          <Property Name="IsActive" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_MstCategory">
+          <Key>
+            <PropertyRef Name="pkId" />
+          </Key>
+          <Property Name="pkId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="250" />
+          <Property Name="CategoryDescription" Type="nvarchar" MaxLength="250" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="date" />
+          <Property Name="IsActive" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_MstEmails">
+          <Key>
+            <PropertyRef Name="pkId" />
+          </Key>
+          <Property Name="pkId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DisplayName" Type="nvarchar" MaxLength="250" />
+          <Property Name="Email" Type="nvarchar" MaxLength="500" />
+          <Property Name="Password" Type="nvarchar(max)" />
+          <Property Name="Smtp_Server" Type="nvarchar" MaxLength="250" />
+          <Property Name="IsEnableSSL" Type="int" />
+          <Property Name="Incomming_Port" Type="int" />
+          <Property Name="Outgoing_Port" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsActive" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="tbl_MstMerchants">
+          <Key>
+            <PropertyRef Name="pkMerchantId" />
+          </Key>
+          <Property Name="pkMerchantId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="250" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="250" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="500" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="250" />
+          <Property Name="EmployeeCode" Type="nvarchar" MaxLength="250" />
+          <Property Name="Department" Type="nvarchar" MaxLength="250" />
+          <Property Name="Designation" Type="nvarchar" MaxLength="250" />
+          <Property Name="fkBossId" Type="int" />
+          <Property Name="Mobile_Primary" Type="nvarchar" MaxLength="20" />
+          <Property Name="Mobile_Alternate" Type="nvarchar" MaxLength="20" />
+          <Property Name="Email_Primary" Type="nvarchar(max)" />
+          <Property Name="Email_Alternate" Type="nvarchar(max)" />
+          <Property Name="MerchantImage" Type="nvarchar(max)" />
+          <Property Name="DateofBirth" Type="datetime" />
+          <Property Name="DateofJoining" Type="datetime" />
+          <Property Name="IsMobileVerified" Type="int" />
+          <Property Name="MobileVerifiedDate" Type="datetime" />
+          <Property Name="IsEmailVerified" Type="int" />
+          <Property Name="EmailVerifiedDate" Type="datetime" />
+          <Property Name="LastLoggedInDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifedDate" Type="datetime" />
+          <Property Name="IsActive" Type="int" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tbl_MstMerchantsRoleXref">
+          <Key>
+            <PropertyRef Name="pkId" />
+          </Key>
+          <Property Name="pkId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fkMerchantId" Type="int" />
+          <Property Name="fkRoleId" Type="int" />
+          <Property Name="IsDefaultRole" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsActive" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_MstRoles">
+          <Key>
+            <PropertyRef Name="pkId" />
+          </Key>
+          <Property Name="pkId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="250" />
+          <Property Name="RoleDescription" Type="nvarchar" MaxLength="250" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsActive" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_MstSubCategory">
+          <Key>
+            <PropertyRef Name="pkId" />
+          </Key>
+          <Property Name="pkId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fkCategoryId" Type="int" />
+          <Property Name="SubCategoryName" Type="nvarchar" MaxLength="250" />
+          <Property Name="SubCategoryDesc" Type="nvarchar" MaxLength="250" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifedBy" Type="int" />
+          <Property Name="ModifedDate" Type="datetime" />
+          <Property Name="IsActive" Type="int" />
+        </EntityType>
+        <Association Name="FK_tbl_MstMerchantsRoleXref_tbl_MstMerchants">
+          <End Role="tbl_MstMerchants" Type="Self.tbl_MstMerchants" Multiplicity="0..1" />
+          <End Role="tbl_MstMerchantsRoleXref" Type="Self.tbl_MstMerchantsRoleXref" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_MstMerchants">
+              <PropertyRef Name="pkMerchantId" />
+            </Principal>
+            <Dependent Role="tbl_MstMerchantsRoleXref">
+              <PropertyRef Name="fkMerchantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_MstMerchantsRoleXref_tbl_MstRoles">
+          <End Role="tbl_MstRoles" Type="Self.tbl_MstRoles" Multiplicity="0..1" />
+          <End Role="tbl_MstMerchantsRoleXref" Type="Self.tbl_MstMerchantsRoleXref" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_MstRoles">
+              <PropertyRef Name="pkId" />
+            </Principal>
+            <Dependent Role="tbl_MstMerchantsRoleXref">
+              <PropertyRef Name="fkRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_MstSubCategory_tbl_MstCategory">
+          <End Role="tbl_MstCategory" Type="Self.tbl_MstCategory" Multiplicity="0..1" />
+          <End Role="tbl_MstSubCategory" Type="Self.tbl_MstSubCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_MstCategory">
+              <PropertyRef Name="pkId" />
+            </Principal>
+            <Dependent Role="tbl_MstSubCategory">
+              <PropertyRef Name="fkCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ERPDbModelStoreContainer">
+          <EntitySet Name="tbl_MstAccessMainMenu" EntityType="Self.tbl_MstAccessMainMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_MstAccessPages" EntityType="Self.tbl_MstAccessPages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_MstAccessSubMenu" EntityType="Self.tbl_MstAccessSubMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_MstCategory" EntityType="Self.tbl_MstCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_MstEmails" EntityType="Self.tbl_MstEmails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_MstMerchants" EntityType="Self.tbl_MstMerchants" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_MstMerchantsRoleXref" EntityType="Self.tbl_MstMerchantsRoleXref" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_MstRoles" EntityType="Self.tbl_MstRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_MstSubCategory" EntityType="Self.tbl_MstSubCategory" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tbl_MstMerchantsRoleXref_tbl_MstMerchants" Association="Self.FK_tbl_MstMerchantsRoleXref_tbl_MstMerchants">
+            <End Role="tbl_MstMerchants" EntitySet="tbl_MstMerchants" />
+            <End Role="tbl_MstMerchantsRoleXref" EntitySet="tbl_MstMerchantsRoleXref" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_MstMerchantsRoleXref_tbl_MstRoles" Association="Self.FK_tbl_MstMerchantsRoleXref_tbl_MstRoles">
+            <End Role="tbl_MstRoles" EntitySet="tbl_MstRoles" />
+            <End Role="tbl_MstMerchantsRoleXref" EntitySet="tbl_MstMerchantsRoleXref" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_MstSubCategory_tbl_MstCategory" Association="Self.FK_tbl_MstSubCategory_tbl_MstCategory">
+            <End Role="tbl_MstCategory" EntitySet="tbl_MstCategory" />
+            <End Role="tbl_MstSubCategory" EntitySet="tbl_MstSubCategory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ERPDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbl_MstAccessMainMenu">
+          <Key>
+            <PropertyRef Name="pkMainMenuId" />
+          </Key>
+          <Property Name="pkMainMenuId" Type="Int32" Nullable="false" />
+          <Property Name="MenuName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="fkPageId" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbl_MstAccessPages">
+          <Key>
+            <PropertyRef Name="pkPageId" />
+          </Key>
+          <Property Name="pkPageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PageName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="PageUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbl_MstAccessSubMenu">
+          <Key>
+            <PropertyRef Name="pkSubMenuId" />
+          </Key>
+          <Property Name="pkSubMenuId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fkMenuId" Type="Int32" />
+          <Property Name="SubMenuName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="fkPageId" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbl_MstCategory">
+          <Key>
+            <PropertyRef Name="pkId" />
+          </Key>
+          <Property Name="pkId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Int32" />
+          <NavigationProperty Name="tbl_MstSubCategory" Relationship="Self.FK_tbl_MstSubCategory_tbl_MstCategory" FromRole="tbl_MstCategory" ToRole="tbl_MstSubCategory" />
+        </EntityType>
+        <EntityType Name="tbl_MstEmails">
+          <Key>
+            <PropertyRef Name="pkId" />
+          </Key>
+          <Property Name="pkId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DisplayName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Smtp_Server" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IsEnableSSL" Type="Int32" />
+          <Property Name="Incomming_Port" Type="Int32" />
+          <Property Name="Outgoing_Port" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_MstMerchants">
+          <Key>
+            <PropertyRef Name="pkMerchantId" />
+          </Key>
+          <Property Name="pkMerchantId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeCode" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Department" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Designation" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="fkBossId" Type="Int32" />
+          <Property Name="Mobile_Primary" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile_Alternate" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Email_Primary" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email_Alternate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MerchantImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateofBirth" Type="DateTime" Precision="3" />
+          <Property Name="DateofJoining" Type="DateTime" Precision="3" />
+          <Property Name="IsMobileVerified" Type="Int32" />
+          <Property Name="MobileVerifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsEmailVerified" Type="Int32" />
+          <Property Name="EmailVerifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastLoggedInDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Int32" />
+          <NavigationProperty Name="tbl_MstMerchantsRoleXref" Relationship="Self.FK_tbl_MstMerchantsRoleXref_tbl_MstMerchants" FromRole="tbl_MstMerchants" ToRole="tbl_MstMerchantsRoleXref" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_MstMerchantsRoleXref">
+          <Key>
+            <PropertyRef Name="pkId" />
+          </Key>
+          <Property Name="pkId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fkMerchantId" Type="Int32" />
+          <Property Name="fkRoleId" Type="Int32" />
+          <Property Name="IsDefaultRole" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Int32" />
+          <NavigationProperty Name="tbl_MstMerchants" Relationship="Self.FK_tbl_MstMerchantsRoleXref_tbl_MstMerchants" FromRole="tbl_MstMerchantsRoleXref" ToRole="tbl_MstMerchants" />
+          <NavigationProperty Name="tbl_MstRoles" Relationship="Self.FK_tbl_MstMerchantsRoleXref_tbl_MstRoles" FromRole="tbl_MstMerchantsRoleXref" ToRole="tbl_MstRoles" />
+        </EntityType>
+        <EntityType Name="tbl_MstRoles">
+          <Key>
+            <PropertyRef Name="pkId" />
+          </Key>
+          <Property Name="pkId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="RoleDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Int32" />
+          <NavigationProperty Name="tbl_MstMerchantsRoleXref" Relationship="Self.FK_tbl_MstMerchantsRoleXref_tbl_MstRoles" FromRole="tbl_MstRoles" ToRole="tbl_MstMerchantsRoleXref" />
+        </EntityType>
+        <EntityType Name="tbl_MstSubCategory">
+          <Key>
+            <PropertyRef Name="pkId" />
+          </Key>
+          <Property Name="pkId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fkCategoryId" Type="Int32" />
+          <Property Name="SubCategoryName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="SubCategoryDesc" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifedBy" Type="Int32" />
+          <Property Name="ModifedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Int32" />
+          <NavigationProperty Name="tbl_MstCategory" Relationship="Self.FK_tbl_MstSubCategory_tbl_MstCategory" FromRole="tbl_MstSubCategory" ToRole="tbl_MstCategory" />
+        </EntityType>
+        <Association Name="FK_tbl_MstSubCategory_tbl_MstCategory">
+          <End Role="tbl_MstCategory" Type="Self.tbl_MstCategory" Multiplicity="0..1" />
+          <End Role="tbl_MstSubCategory" Type="Self.tbl_MstSubCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_MstCategory">
+              <PropertyRef Name="pkId" />
+            </Principal>
+            <Dependent Role="tbl_MstSubCategory">
+              <PropertyRef Name="fkCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_MstMerchantsRoleXref_tbl_MstMerchants">
+          <End Role="tbl_MstMerchants" Type="Self.tbl_MstMerchants" Multiplicity="0..1" />
+          <End Role="tbl_MstMerchantsRoleXref" Type="Self.tbl_MstMerchantsRoleXref" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_MstMerchants">
+              <PropertyRef Name="pkMerchantId" />
+            </Principal>
+            <Dependent Role="tbl_MstMerchantsRoleXref">
+              <PropertyRef Name="fkMerchantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_MstMerchantsRoleXref_tbl_MstRoles">
+          <End Role="tbl_MstRoles" Type="Self.tbl_MstRoles" Multiplicity="0..1" />
+          <End Role="tbl_MstMerchantsRoleXref" Type="Self.tbl_MstMerchantsRoleXref" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_MstRoles">
+              <PropertyRef Name="pkId" />
+            </Principal>
+            <Dependent Role="tbl_MstMerchantsRoleXref">
+              <PropertyRef Name="fkRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ERPDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_MstAccessMainMenu" EntityType="Self.tbl_MstAccessMainMenu" />
+          <EntitySet Name="tbl_MstAccessPages" EntityType="Self.tbl_MstAccessPages" />
+          <EntitySet Name="tbl_MstAccessSubMenu" EntityType="Self.tbl_MstAccessSubMenu" />
+          <EntitySet Name="tbl_MstCategory" EntityType="Self.tbl_MstCategory" />
+          <EntitySet Name="tbl_MstEmails" EntityType="Self.tbl_MstEmails" />
+          <EntitySet Name="tbl_MstMerchants" EntityType="Self.tbl_MstMerchants" />
+          <EntitySet Name="tbl_MstMerchantsRoleXref" EntityType="Self.tbl_MstMerchantsRoleXref" />
+          <EntitySet Name="tbl_MstRoles" EntityType="Self.tbl_MstRoles" />
+          <EntitySet Name="tbl_MstSubCategory" EntityType="Self.tbl_MstSubCategory" />
+          <AssociationSet Name="FK_tbl_MstSubCategory_tbl_MstCategory" Association="Self.FK_tbl_MstSubCategory_tbl_MstCategory">
+            <End Role="tbl_MstCategory" EntitySet="tbl_MstCategory" />
+            <End Role="tbl_MstSubCategory" EntitySet="tbl_MstSubCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_MstMerchantsRoleXref_tbl_MstMerchants" Association="Self.FK_tbl_MstMerchantsRoleXref_tbl_MstMerchants">
+            <End Role="tbl_MstMerchants" EntitySet="tbl_MstMerchants" />
+            <End Role="tbl_MstMerchantsRoleXref" EntitySet="tbl_MstMerchantsRoleXref" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_MstMerchantsRoleXref_tbl_MstRoles" Association="Self.FK_tbl_MstMerchantsRoleXref_tbl_MstRoles">
+            <End Role="tbl_MstRoles" EntitySet="tbl_MstRoles" />
+            <End Role="tbl_MstMerchantsRoleXref" EntitySet="tbl_MstMerchantsRoleXref" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ERPDbModelStoreContainer" CdmEntityContainer="ERPDbEntities">
+          <EntitySetMapping Name="tbl_MstAccessMainMenu">
+            <EntityTypeMapping TypeName="ERPDbModel.tbl_MstAccessMainMenu">
+              <MappingFragment StoreEntitySet="tbl_MstAccessMainMenu">
+                <ScalarProperty Name="pkMainMenuId" ColumnName="pkMainMenuId" />
+                <ScalarProperty Name="MenuName" ColumnName="MenuName" />
+                <ScalarProperty Name="fkPageId" ColumnName="fkPageId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_MstAccessPages">
+            <EntityTypeMapping TypeName="ERPDbModel.tbl_MstAccessPages">
+              <MappingFragment StoreEntitySet="tbl_MstAccessPages">
+                <ScalarProperty Name="pkPageId" ColumnName="pkPageId" />
+                <ScalarProperty Name="PageName" ColumnName="PageName" />
+                <ScalarProperty Name="PageUrl" ColumnName="PageUrl" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_MstAccessSubMenu">
+            <EntityTypeMapping TypeName="ERPDbModel.tbl_MstAccessSubMenu">
+              <MappingFragment StoreEntitySet="tbl_MstAccessSubMenu">
+                <ScalarProperty Name="pkSubMenuId" ColumnName="pkSubMenuId" />
+                <ScalarProperty Name="fkMenuId" ColumnName="fkMenuId" />
+                <ScalarProperty Name="SubMenuName" ColumnName="SubMenuName" />
+                <ScalarProperty Name="fkPageId" ColumnName="fkPageId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifedDate" ColumnName="ModifedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_MstCategory">
+            <EntityTypeMapping TypeName="ERPDbModel.tbl_MstCategory">
+              <MappingFragment StoreEntitySet="tbl_MstCategory">
+                <ScalarProperty Name="pkId" ColumnName="pkId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CategoryDescription" ColumnName="CategoryDescription" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_MstEmails">
+            <EntityTypeMapping TypeName="ERPDbModel.tbl_MstEmails">
+              <MappingFragment StoreEntitySet="tbl_MstEmails">
+                <ScalarProperty Name="pkId" ColumnName="pkId" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Smtp_Server" ColumnName="Smtp_Server" />
+                <ScalarProperty Name="IsEnableSSL" ColumnName="IsEnableSSL" />
+                <ScalarProperty Name="Incomming_Port" ColumnName="Incomming_Port" />
+                <ScalarProperty Name="Outgoing_Port" ColumnName="Outgoing_Port" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_MstMerchants">
+            <EntityTypeMapping TypeName="ERPDbModel.tbl_MstMerchants">
+              <MappingFragment StoreEntitySet="tbl_MstMerchants">
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="pkMerchantId" ColumnName="pkMerchantId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="EmployeeCode" ColumnName="EmployeeCode" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="fkBossId" ColumnName="fkBossId" />
+                <ScalarProperty Name="Mobile_Primary" ColumnName="Mobile_Primary" />
+                <ScalarProperty Name="Mobile_Alternate" ColumnName="Mobile_Alternate" />
+                <ScalarProperty Name="Email_Primary" ColumnName="Email_Primary" />
+                <ScalarProperty Name="Email_Alternate" ColumnName="Email_Alternate" />
+                <ScalarProperty Name="MerchantImage" ColumnName="MerchantImage" />
+                <ScalarProperty Name="DateofBirth" ColumnName="DateofBirth" />
+                <ScalarProperty Name="DateofJoining" ColumnName="DateofJoining" />
+                <ScalarProperty Name="IsMobileVerified" ColumnName="IsMobileVerified" />
+                <ScalarProperty Name="MobileVerifiedDate" ColumnName="MobileVerifiedDate" />
+                <ScalarProperty Name="IsEmailVerified" ColumnName="IsEmailVerified" />
+                <ScalarProperty Name="EmailVerifiedDate" ColumnName="EmailVerifiedDate" />
+                <ScalarProperty Name="LastLoggedInDate" ColumnName="LastLoggedInDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifedDate" ColumnName="ModifedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_MstMerchantsRoleXref">
+            <EntityTypeMapping TypeName="ERPDbModel.tbl_MstMerchantsRoleXref">
+              <MappingFragment StoreEntitySet="tbl_MstMerchantsRoleXref">
+                <ScalarProperty Name="pkId" ColumnName="pkId" />
+                <ScalarProperty Name="fkMerchantId" ColumnName="fkMerchantId" />
+                <ScalarProperty Name="fkRoleId" ColumnName="fkRoleId" />
+                <ScalarProperty Name="IsDefaultRole" ColumnName="IsDefaultRole" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_MstRoles">
+            <EntityTypeMapping TypeName="ERPDbModel.tbl_MstRoles">
+              <MappingFragment StoreEntitySet="tbl_MstRoles">
+                <ScalarProperty Name="pkId" ColumnName="pkId" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleDescription" ColumnName="RoleDescription" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_MstSubCategory">
+            <EntityTypeMapping TypeName="ERPDbModel.tbl_MstSubCategory">
+              <MappingFragment StoreEntitySet="tbl_MstSubCategory">
+                <ScalarProperty Name="pkId" ColumnName="pkId" />
+                <ScalarProperty Name="fkCategoryId" ColumnName="fkCategoryId" />
+                <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
+                <ScalarProperty Name="SubCategoryDesc" ColumnName="SubCategoryDesc" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifedBy" ColumnName="ModifedBy" />
+                <ScalarProperty Name="ModifedDate" ColumnName="ModifedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
