@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "EmailConfiguration";
+}
+
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0 font-size-18">Email Configuration</h4>
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Email Configuration</a></li>
+                    <li class="breadcrumb-item active">ERP</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+<div class="row">
+    @foreach (var item in ViewBag.Result)
+    {
+        <div class="col-xl-4 col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="media">
+                        <div class="avatar-md mr-4">
+                            <span class="avatar-title rounded-circle bg-light text-danger font-size-16">
+                                <img src="~/Content/images/email.png" alt="" height="30">
+                               
+                            </span>
+                        </div>
+
+                        <div class="media-body overflow-hidden">
+                            <h5 class="text-truncate font-size-15"><a href="#" class="text-dark">@item.DisplayName</a></h5>
+                            <p class="text-muted mb-4">@item.Email</p>
+                            <p>SMTP: @item.Smtp_Server</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="px-4 py-3 border-top">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item mr-3">
+                            @if (item.IsActive == "1")
+                            {
+                                <label class="badge badge-success">Active</label>
+                            }
+
+                            else
+                            {
+                                <label class="badge badge-danger"> In-Active</label>
+                            }
+                            
+                        </li>
+                        <li class="list-inline-item mr-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="Due Date">
+                            <i class="bx bx-calendar mr-1"></i> 15 Oct, 19
+                        </li>
+                        <li class="list-inline-item mr-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="Comments">
+                            <i class="bx bx-comment-dots mr-1"></i> 214
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+
+
+
+</div>
+

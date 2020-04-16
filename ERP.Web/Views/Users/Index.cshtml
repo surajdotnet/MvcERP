@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0 font-size-18">Users</h4>
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li ><a href="~/Users/Create" class="btn btn-primary waves-effect waves-light">Add User</a></li>
+                    
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Sr No</th>
+                            <th>Employee Code</th>
+                            <th>Merchant Name</th>
+                            <th>Department</th>
+                            <th>Designation</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
+                            <th>User image</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.Result)
+                        {
+                            <tr>
+                                <td>@( ((Int32)1) + @Model.IndexOf(item) )</td>
+
+                                <td> @item.EmployeeCode </td>
+                                <td> @item.FirstName @item.FirstName</td>
+                                <td>@item.Department</td>
+                                <td>@item.Designation</td>
+                                <td>@item.Email_Primary</td>
+                                <td>@item.Mobile_Primary</td>
+                               
+                                <td>
+                                    @if (item.MerchantImage != null)
+                                    {
+                                        string imagepath = item.MerchantImage;
+                                        imagepath = "../.." + imagepath.Substring(1);
+                                        <img src="@imagepath" style="height:50px;width:50px;" class="img img-circle" />
+                                    }
+
+                                </td>
+                                <td>
+                                    @if (item.IsActive == 1)
+                                    {
+                                        <label class="badge badge-success">Active</label>
+                                    }
+
+                                    else
+                                    {
+                                        <label class="badge badge-danger"> In-Active</label>
+                                    }
+
+                                </td>
+                                <td style="min-width:100px;">
+                                    <a href="~/Users/Edit/@item.pkMerchantId" class="btn btn-success btn-sm waves-effect waves-light">
+                                        <i class="bx bx-pencil"></i>
+                                    </a>
+                                    <button type="button" class="btn btn-danger btn-sm waves-effect waves-light">
+                                        <i class="bx bx-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

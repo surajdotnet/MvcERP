@@ -139,6 +139,7 @@
     <Content Include="Content\images\companies\img-4.png" />
     <Content Include="Content\images\companies\img-5.png" />
     <Content Include="Content\images\companies\img-6.png" />
+    <Content Include="Content\images\email.png" />
     <Content Include="Content\images\error-img.png" />
     <Content Include="Content\images\favicon.ico" />
     <Content Include="Content\images\flags\germany.jpg" />
@@ -348,6 +349,7 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Uploads\MerchantImages\noimage.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -356,8 +358,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\DashbordController.cs" />
+    <Compile Include="Controllers\ControlPannelController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -372,7 +377,18 @@
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Dashbord\Index.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Roles\Create.cshtml" />
+    <Content Include="Views\Roles\Edit.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\ControlPannel\EmailConfiguration.cshtml" />
+    <Content Include="Views\Shared\_Layout_Classified.cshtml" />
+    <Content Include="Views\Account\MyAccount.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\RecoverPassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -383,6 +399,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ElmahLog\" />
+    <Folder Include="EmailTemplates\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

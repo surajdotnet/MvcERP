@@ -1,0 +1,185 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0 font-size-18">Add User</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="~/Users/Index">Users</a></li>
+                    <li class="breadcrumb-item active">Add User</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title">Basic Information</h4>
+                <p class="card-title-desc">User basic Information</p>
+
+          
+                    @using (Html.BeginForm("Create", "Users", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Title:</label>
+                                    <select name="Title" class="form-control"><option value="Mr.">Mr.</option><option value="Mrs.">Mrs.</option><option value="Ms.">Ms.</option></select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>First Name:</label>
+                                    <input id="FirstName" name="FirstName" type="text" class="form-control">
+                                </div>
+
+
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Last Name:</label>
+                                    <input id="LastName" name="LastName" type="text" class="form-control">
+                                </div>
+
+
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Gender</label>
+                                    <input id="Gender" name="Gender" type="text" readonly class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Employee Code</label>
+                                    <input id="EmployeeCode" name="EmployeeCode" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Department</label>
+                                    <input id="Department" name="Department" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Designation</label>
+                                    <input id="Designation" name="Designation" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Reporting Manager</label>
+                                    @Html.DropDownList("fkBossId", new SelectList(ViewBag.ActiveUsers, "pkMerchantId", "FullName"), "Please select", new { @id = "fkBossId", @class = "form-control select2" })
+
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Mobile No(Primary)</label>
+                                    <input id="Mobile_Primary" name="Mobile_Primary" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Mobile No(Alternate)</label>
+                                    <input id="Mobile_Alternate" name="Mobile_Alternate" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Email (Official)</label>
+                                    <input id="Email_Primary" name="Email_Primary" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Email (Personal)</label>
+                                    <input id="Email_Alternate" name="Email_Alternate" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Date Of Birth</label>
+                                    <input id="DateofBirth" name="DateofBirth" type="text" class="form-control" placeholder="mm/dd/yyyy" data-provide="datepicker" data-date-autoclose="true">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Date Of Joining</label>
+                                    <input id="DateofJoining" name="DateofJoining" type="text" class="form-control" placeholder="mm/dd/yyyy" data-provide="datepicker" data-date-autoclose="true">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Permissions</label>
+                                    @Html.DropDownList("RoleIds", new SelectList(ViewBag.ActiveRoles, "pkId", "RoleName"), "Please select", new { @id = "RoleIds", @class = "select2 form-control select2-multiple", @multiple = "multiple", @placeholder = "Choose ..." })
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input id="PasswordHash" name="PasswordHash" type="password" class="form-control">
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Photo</label>
+                                    <input id="postedFile" name="postedFile" type="file" class="form-control">
+
+                                </div>
+                            </div>
+                             <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Status:</label>
+                                    <select name="IsActive" class="form-control"><option value="1" selected>Active</option><option value="0">InActive</option></select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mr-1 waves-effect waves-light">Save Changes</button>
+                        <button type="button" class="btn btn-secondary waves-effect">Cancel</button>
+                    }
+
+              
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+    //$('input[id$=DateOfBirth]').datepicker({
+    //    dateFormat: 'dd-mm-yy'
+    //});
+    //$('input[id$=DateOfJoining]').datepicker({
+    //    dateFormat: 'dd-mm-yy'
+    //});
+    $("#Title").change(function () {
+        if ($("#Title").val() == "Mr.") {
+            $("#Gender").val('Male');
+        }
+        else {
+            $("#Gender").val('FeMale');
+        }
+    });
+</script>

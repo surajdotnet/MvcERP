@@ -11,7 +11,7 @@ namespace ERP.Entity
     {
         [Required]
         [Display(Name = "Email or Mobile")]
-        [EmailAddress]
+      
         public string UserName { get; set; }
 
         [Required]

@@ -1,0 +1,258 @@
+﻿
+@{
+    ViewBag.Title = "MyAccount";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="mdi mdi-check-all mr-2"></i>
+                @TempData["Success"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+        }
+        else
+        {
+            if (TempData["Error"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="mdi mdi-block-helper mr-2"></i>
+                    @TempData["Error"]
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            }
+
+        }
+
+
+    </div>
+
+
+</div>
+<div class="row">
+    <div class="col-xl-4">
+        <div class="card overflow-hidden">
+            <div class="bg-soft-primary">
+                <div class="row">
+                    <div class="col-7">
+                        <div class="text-primary p-3">
+                            <h5 class="text-primary">Welcome Back !</h5>
+                            <p>My Account</p>
+                        </div>
+                    </div>
+                    <div class="col-5 align-self-end">
+
+                        <img src="#" alt="" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+            <div class="card-body pt-0">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="avatar-md profile-user-wid mb-4">
+                            @if (ViewBag.Result.MerchantImage != null)
+                            {
+                                string imagepath = ViewBag.Result.MerchantImage;
+                                imagepath = "../.." + imagepath.Substring(1);
+                                <img src="@imagepath" alt="" class="img-thumbnail rounded-circle">
+                            }
+
+                        </div>
+                        <h5 class="font-size-15 text-truncate">@ViewBag.Result.FirstName @ViewBag.Result.LastName </h5>
+                        <p class="text-muted mb-0 text-truncate">@ViewBag.Result.Designation</p>
+                    </div>
+
+                    <div class="col-sm-8">
+                        <div class="pt-4">
+
+                            @using (Html.BeginForm("UpdateProfilePhoto", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h5 class="font-size-15">Select File</h5>
+                                        <input type="file" id="postedFile" name="postedFile" />
+                                    </div>
+
+                                </div>
+                                <div class="mt-4">
+                                    <input type="submit" class="btn btn-primary waves-effect waves-light btn-sm" value="Update Photo" />
+                                   
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-xl-8">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title">Your Account</h4>
+                <p class="card-title-desc">your account basic Information</p>
+
+
+                @using (Html.BeginForm("UpdateProfile", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    if (ViewBag.Result != null)
+                    {
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Title:</label>
+                                    <select name="Title" id="Title" class="form-control"><option value="Mr.">Mr.</option><option value="Mrs.">Mrs.</option><option value="Ms.">Ms.</option></select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>First Name:</label>
+                                    <input id="FirstName" name="FirstName" type="text" value="@ViewBag.Result.FirstName" class="form-control">
+                                </div>
+
+
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Last Name:</label>
+                                    <input id="LastName" name="LastName" type="text" class="form-control" value="@ViewBag.Result.LastName">
+                                </div>
+
+
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Gender</label><br />
+                                    <label id="genShow">@ViewBag.Result.Gender</label><br />
+                                    <input id="Gender" name="Gender" type="hidden">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Employee Code</label><br />
+                                    <label>@ViewBag.Result.EmployeeCode</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Department</label>
+                                    <input id="Department" name="Department" type="text" class="form-control" value="@ViewBag.Result.Department">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Designation</label>
+                                    <input id="Designation" name="Designation" type="text" class="form-control" value="@ViewBag.Result.Designation">
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Mobile No(Primary)</label><br />
+                                    <label>@ViewBag.Result.Mobile_Primary</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Mobile No(Alternate)</label>
+                                    <input id="Mobile_Alternate" name="Mobile_Alternate" type="text" class="form-control" value="@ViewBag.Result.Mobile_Alternate">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Email (Official)</label><br />
+                                    <label> @ViewBag.Result.Email_Primary</label>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Email (Personal)</label>
+                                    <input id="Email_Alternate" name="Email_Alternate" type="text" class="form-control" value="@ViewBag.Result.Email_Alternate">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Date Of Birth</label>
+                                    @{
+                                        DateTime dt = Convert.ToDateTime(@ViewBag.Result.DateofBirth);
+                                        string Month = "";
+                                        if (dt.Month >= 1 && dt.Month <= 9)
+                                        {
+                                            Month = "0" + Convert.ToString(dt.Month);
+                                        }
+                                        else
+                                        {
+                                            Month = Convert.ToString(dt.Month);
+                                        }
+                                        string Day = "";
+                                        if (dt.Day >= 1 && dt.Day <= 9)
+                                        {
+                                            Day = "0" + Convert.ToString(dt.Day);
+                                        }
+                                        else
+                                        {
+                                            Day = Convert.ToString(dt.Day);
+                                        }
+
+
+                                        string finaldate = Month + '/' + Day + '/' + Convert.ToString(dt.Year);
+                                        <input id="DateofBirth" name="DateofBirth" type="text" class="form-control" placeholder="mm/dd/yyyy" data-provide="datepicker" data-date-autoclose="true" value="@finaldate">
+                                    }
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mr-1 waves-effect waves-light">Update Profile</button>
+                        <button type="button" class="btn btn-secondary waves-effect">Cancel</button>
+                    }
+                    else
+                    {
+                        <h3>No Data Found</h3>
+                    }
+
+                }
+
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+    $("#Title option[value='@ViewBag.Result.Title']").attr("selected", "selected");
+
+    $("#Title").change(function () {
+        if ($("#Title").val() == "Mr.") {
+            $("#Gender").val('Male');
+            $("#genShow").text('Male');
+        }
+        else {
+            $("#Gender").val('FeMale');
+            $("#genShow").text('FeMale');
+        }
+    });
+</script>
+

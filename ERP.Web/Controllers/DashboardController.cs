@@ -6,8 +6,8 @@ using System.Web.Mvc;
 
 namespace ERP.Web.Controllers
 {
-    [AllowAnonymous]
-    public class DashbordController : Controller
+    [Authorize]
+    public class DashboardController : Controller
     {
         // GET: Dashbord
         public ActionResult Index()
