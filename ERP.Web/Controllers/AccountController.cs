@@ -1,5 +1,6 @@
 ﻿using ERP.Entity;
 using ERP.Entity.Models;
+using ERP.Entity.Models.Extended;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -7,6 +8,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -17,9 +19,6 @@ namespace ERP.Web.Controllers
     public class AccountController : Controller
     {
         public ERPDbEntities db = new ERPDbEntities();
-
-
-
         // GET: Account
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -127,13 +126,13 @@ namespace ERP.Web.Controllers
                 DateTime dt = DateTime.ParseExact(form["DateofBirth"], "mm/dd/yyyy", CultureInfo.InvariantCulture);
                 obj.DateofBirth = Convert.ToDateTime(dt.ToString("yyyy-mm-dd"));
 
-               
+
                 obj.ModifiedBy = Convert.ToInt32(User.Identity.Name);
                 obj.ModifedDate = DateTime.Now;
                 db.Entry(obj).State = EntityState.Modified;
                 db.SaveChanges();
                 TempData["Success"] = "Profile Updated Successfully!";
-                return RedirectToAction("MyAccount","Account");
+                return RedirectToAction("MyAccount", "Account");
             }
             catch (Exception ex)
             {
@@ -146,46 +145,46 @@ namespace ERP.Web.Controllers
         [HttpPost]
         public ActionResult UpdateProfilePhoto(HttpPostedFileBase postedFile)
         {
-            
-                // TODO: Add update logic here
-                int id = Convert.ToInt32(User.Identity.Name);
-                tbl_MstMerchants obj = db.tbl_MstMerchants.Where(x => x.pkMerchantId == id).FirstOrDefault();
-                var DbPath = "~/Uploads/MerchantImages/noimage.jpg";
-                if (postedFile != null)
-                {
-                    string path = Server.MapPath("~/Uploads/MerchantImages/");
-                    if (!Directory.Exists(path))
-                    {
-                        Directory.CreateDirectory(path);
-                    }
-                    var filename = DateTime.Now.ToString("MM_dd_yyyy_hh_mm_ss") + "_" + Path.GetFileName(postedFile.FileName);
-                    // postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
-                    DbPath = "~/Uploads/MerchantImages/" + filename;
-                    postedFile.SaveAs(path + filename);
-                    obj.MerchantImage = DbPath;
-                    obj.ModifiedBy = Convert.ToInt32(User.Identity.Name);
-                    obj.ModifedDate = DateTime.Now;
 
-                    try
-                    {
-                        db.Entry(obj).State = EntityState.Modified;
-                        db.SaveChanges();
-                        TempData["Success"] = "Photo Updated Successfully!";
-                        return RedirectToAction("MyAccount", "Account");
-                    }
-                    catch (Exception ex)
-                    {
-                        TempData["Error"] = "Error Occured: " + ex.ToString();
-                        return RedirectToAction("MyAccount", "Account");
-                    }
-                    
-                }
-                else
+            // TODO: Add update logic here
+            int id = Convert.ToInt32(User.Identity.Name);
+            tbl_MstMerchants obj = db.tbl_MstMerchants.Where(x => x.pkMerchantId == id).FirstOrDefault();
+            var DbPath = "~/Uploads/MerchantImages/noimage.jpg";
+            if (postedFile != null)
+            {
+                string path = Server.MapPath("~/Uploads/MerchantImages/");
+                if (!Directory.Exists(path))
                 {
-                    TempData["Error"] = "Please select a file";
+                    Directory.CreateDirectory(path);
+                }
+                var filename = DateTime.Now.ToString("MM_dd_yyyy_hh_mm_ss") + "_" + Path.GetFileName(postedFile.FileName);
+                // postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
+                DbPath = "~/Uploads/MerchantImages/" + filename;
+                postedFile.SaveAs(path + filename);
+                obj.MerchantImage = DbPath;
+                obj.ModifiedBy = Convert.ToInt32(User.Identity.Name);
+                obj.ModifedDate = DateTime.Now;
+
+                try
+                {
+                    db.Entry(obj).State = EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["Success"] = "Photo Updated Successfully!";
                     return RedirectToAction("MyAccount", "Account");
                 }
-            
+                catch (Exception ex)
+                {
+                    TempData["Error"] = "Error Occured: " + ex.ToString();
+                    return RedirectToAction("MyAccount", "Account");
+                }
+
+            }
+            else
+            {
+                TempData["Error"] = "Please select a file";
+                return RedirectToAction("MyAccount", "Account");
+            }
+
         }
 
         public ActionResult ChangePassword()
@@ -201,69 +200,114 @@ namespace ERP.Web.Controllers
             }
 
         }
-
+        [AllowAnonymous]
         public ActionResult RecoverPassword()
         {
-            if (User.Identity.IsAuthenticated)
-            {
+            return View();
+        }
 
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult RecoverPassword(string EmailID)
+        {
+            var result = db.tbl_MstMerchants.Where(x => x.Email_Primary == EmailID && x.IsActive == 1).FirstOrDefault();
+            if (result != null)
+            {
+                string resetCode = Guid.NewGuid().ToString();
+                var resetUrl = "/Account/ResetPassword/" + resetCode;
+                var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, resetUrl);
+
+                result.PasswordResetCode = resetCode;
+                db.Configuration.ValidateOnSaveEnabled = false;
+                db.SaveChanges();
+
+                EmailManager em = new EmailManager();
+                em.To = EmailID;
+                em.Subject = "Password Reset Link:: ERP";
+                string body = string.Empty;
+                using (StreamReader reader = new StreamReader(Server.MapPath("~/EmailTemplates/passwordreset.html")))
+                {
+                    body = reader.ReadToEnd();
+                }
+                body = body.Replace("{UserName}", result.FullName);
+                body = body.Replace("{Url}", link);
+                em.MessageBody = body;
+                em.SendEmail();
+
+                TempData["Success"] = "Password Reset instruction has been sent to your email id";
                 return View();
+
             }
             else
             {
-                return RedirectToAction("Login");
+                TempData["Error"] = "Their is no account associated with this email id";
+                return View();
             }
 
         }
-        //[HttpPost]
-        //public ActionResult RecoverPassword(string UserName)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult ResetPassword(string id)
+        {
+            //Verify the reset password link
+            //find account associated with it
+            //redirect to reset password page
 
-        //        if (WebSecurity.UserExists(UserName))
-        //        {
-        //            string To = UserName, UserID, Password, SMTPPort, Host;
-        //            string token = WebSecurity.GeneratePasswordResetToken(UserName);
-        //            if (token == null)
-        //            {
-        //                // If user does not exist or is not confirmed.  
+            var user = db.tbl_MstMerchants.Where(x => x.PasswordResetCode == id).FirstOrDefault();
+            if (user != null)
+            {
+                ResetPasswordModel model = new ResetPasswordModel();
+                model.ResetCode = id;
+                return View(model);
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResetPassword(ResetPasswordModel obj)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = db.tbl_MstMerchants.Where(x => x.PasswordResetCode == obj.ResetCode).FirstOrDefault();
+                if (user != null)
+                {
+                    user.PasswordHash = obj.NewPassword; //Crypto.Hash(obj.NewPassword);
+                    user.PasswordResetCode = "";
+                    db.Configuration.ValidateOnSaveEnabled = false;
+                    db.SaveChanges();
 
-        //                return View("Index");
+                    EmailManager em = new EmailManager();
+                    em.To = user.Email_Primary;
+                    em.Subject = "Password Changed:: ERP";
+                    string body = string.Empty;
+                    using (StreamReader reader = new StreamReader(Server.MapPath("~/EmailTemplates/UserDetail.html")))
+                    {
+                        body = reader.ReadToEnd();
+                    }
 
-        //            }
-        //            else
-        //            {
-        //                //Create URL with above token  
-
-        //                var lnkHref = "<a href='" + Url.Action("ResetPassword", "Account", new { email = UserName, code = token }, "http") + "'>Reset Password</a>";
-
-
-        //                //HTML Template for Send email  
-
-        //                string subject = "Your changed password";
-
-        //                string body = "<b>Please find the Password Reset Link. </b><br/>" + lnkHref;
-
-
-        //                //Get and set the AppSettings uscing configuration manager.  
-
-        //                EmailManager.AppSettings(out UserID, out Password, out SMTPPort, out Host);
-
-
-        //                //Call send email methods.  
-
-        //                EmailManager.SendEmail(UserID, subject, body, To, UserID, Password, SMTPPort, Host);
-
-        //            }
-
-        //        }
-
-        //    }
-        //    return View();
-        //}
-
-
+                    body = body.Replace("{Message}", "You're password on ERP has been Changed successfully.");
+                    body = body.Replace("{UserName}", user.FullName);
+                    var loginUrl = "/Account/Login";
+                    var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, loginUrl);
+                    body = body.Replace("{LoginUrl}", link);
+                    body = body.Replace("{Email}", user.Email_Primary);
+                    body = body.Replace("{Mobile}", user.Mobile_Primary);
+                    body = body.Replace("{Password}", user.PasswordHash);
+                    em.MessageBody = body;
+                    em.SendEmail();
+                    TempData["Success"] = "Your Password has benn changed successfully";
+                }
+            }
+            else
+            {
+                TempData["Error"] = "Somthing went wrong";
+            }
+            return View(obj);
+        }
 
         public ActionResult LogOut()
         {

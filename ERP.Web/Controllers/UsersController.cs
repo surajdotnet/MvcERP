@@ -1,4 +1,5 @@
-﻿using ERP.Entity.Models;
+﻿using ERP.Entity;
+using ERP.Entity.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -136,6 +137,26 @@ namespace ERP.Web.Controllers
                     db.SaveChanges();
                     isdef = 1;
                 }
+
+                EmailManager em = new EmailManager();
+                em.To = obj.Email_Primary;
+                em.Subject = "your account created on ERP";
+                string body = string.Empty;
+                using (StreamReader reader = new StreamReader(Server.MapPath("~/EmailTemplates/UserDetail.html")))
+                {
+                    body = reader.ReadToEnd();
+                }
+            
+                body = body.Replace("{Message}", "Welcome: You're account on ERP has been created successfully.");
+                body = body.Replace("{UserName}", obj.FullName);
+                var loginUrl = "/Account/Login";
+                var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, loginUrl);
+                body = body.Replace("{LoginUrl}", link);
+                body = body.Replace("{Email}", obj.Email_Primary);
+                body = body.Replace("{Mobile}", obj.Mobile_Primary);
+                body = body.Replace("{Password}", obj.PasswordHash);
+                em.MessageBody = body;
+                em.SendEmail();
 
 
                 return RedirectToAction("Index");

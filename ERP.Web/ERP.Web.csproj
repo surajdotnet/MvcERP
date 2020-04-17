@@ -315,6 +315,8 @@
     <Content Include="Content\libs\tui-dom\tui-dom.min.js" />
     <Content Include="Content\libs\tui-time-picker\tui-time-picker.html" />
     <Content Include="Content\libs\tui-time-picker\tui-time-picker.min.js" />
+    <Content Include="EmailTemplates\UserDetail.html" />
+    <Content Include="EmailTemplates\passwordreset.html" />
     <Content Include="Global.asax" />
     <Content Include="Content\fonts\boxicons.eot" />
     <Content Include="Content\fonts\boxicons.ttf" />
@@ -362,6 +364,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -389,6 +392,7 @@
     <Content Include="Views\Account\MyAccount.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Account\RecoverPassword.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -399,8 +403,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ElmahLog\" />
-    <Folder Include="EmailTemplates\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ERP.Entity\ERP.Entity.csproj">

@@ -48,6 +48,7 @@ namespace ERP.Entity.Models
         public Nullable<System.DateTime> ModifedDate { get; set; }
         public Nullable<int> IsActive { get; set; }
         public string PasswordHash { get; set; }
+        public string PasswordResetCode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_MstMerchantsRoleXref> tbl_MstMerchantsRoleXref { get; set; }

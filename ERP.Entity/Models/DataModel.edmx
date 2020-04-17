@@ -4,7 +4,23 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ERPDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ERPDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ELMAH_Error">
+          <Key>
+            <PropertyRef Name="ErrorId" />
+          </Key>
+          <Property Name="ErrorId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Application" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="Host" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Source" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="Message" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="User" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StatusCode" Type="int" Nullable="false" />
+          <Property Name="TimeUtc" Type="datetime" Nullable="false" />
+          <Property Name="Sequence" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AllXml" Type="ntext" Nullable="false" />
+        </EntityType>
         <EntityType Name="tbl_MstAccessMainMenu">
           <Key>
             <PropertyRef Name="pkMainMenuId" />
@@ -74,7 +90,7 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="ModifiedDate" Type="datetime" />
-          <Property Name="IsActive" Type="nchar" MaxLength="10" />
+          <Property Name="IsActive" Type="int" />
         </EntityType>
         <EntityType Name="tbl_MstMerchants">
           <Key>
@@ -108,6 +124,7 @@
           <Property Name="ModifedDate" Type="datetime" />
           <Property Name="IsActive" Type="int" />
           <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="PasswordResetCode" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="tbl_MstMerchantsRoleXref">
           <Key>
@@ -187,6 +204,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ERPDbModelStoreContainer">
+          <EntitySet Name="ELMAH_Error" EntityType="Self.ELMAH_Error" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_MstAccessMainMenu" EntityType="Self.tbl_MstAccessMainMenu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_MstAccessPages" EntityType="Self.tbl_MstAccessPages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_MstAccessSubMenu" EntityType="Self.tbl_MstAccessSubMenu" Schema="dbo" store:Type="Tables" />
@@ -209,10 +227,27 @@
             <End Role="tbl_MstSubCategory" EntitySet="tbl_MstSubCategory" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ERPDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ELMAH_Error">
+          <Key>
+            <PropertyRef Name="ErrorId" />
+          </Key>
+          <Property Name="ErrorId" Type="Guid" Nullable="false" />
+          <Property Name="Application" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Host" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Source" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Message" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="User" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StatusCode" Type="Int32" Nullable="false" />
+          <Property Name="TimeUtc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Sequence" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AllXml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
         <EntityType Name="tbl_MstAccessMainMenu">
           <Key>
             <PropertyRef Name="pkMainMenuId" />
@@ -283,7 +318,7 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="IsActive" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="IsActive" Type="Int32" />
         </EntityType>
         <EntityType Name="tbl_MstMerchants">
           <Key>
@@ -316,8 +351,9 @@
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifedDate" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Int32" />
-          <NavigationProperty Name="tbl_MstMerchantsRoleXref" Relationship="Self.FK_tbl_MstMerchantsRoleXref_tbl_MstMerchants" FromRole="tbl_MstMerchants" ToRole="tbl_MstMerchantsRoleXref" />
           <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordResetCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_MstMerchantsRoleXref" Relationship="Self.FK_tbl_MstMerchantsRoleXref_tbl_MstMerchants" FromRole="tbl_MstMerchants" ToRole="tbl_MstMerchantsRoleXref" />
         </EntityType>
         <EntityType Name="tbl_MstMerchantsRoleXref">
           <Key>
@@ -401,6 +437,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ERPDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ELMAH_Error" EntityType="Self.ELMAH_Error" />
           <EntitySet Name="tbl_MstAccessMainMenu" EntityType="Self.tbl_MstAccessMainMenu" />
           <EntitySet Name="tbl_MstAccessPages" EntityType="Self.tbl_MstAccessPages" />
           <EntitySet Name="tbl_MstAccessSubMenu" EntityType="Self.tbl_MstAccessSubMenu" />
@@ -429,6 +466,23 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ERPDbModelStoreContainer" CdmEntityContainer="ERPDbEntities">
+          <EntitySetMapping Name="ELMAH_Error">
+            <EntityTypeMapping TypeName="ERPDbModel.ELMAH_Error">
+              <MappingFragment StoreEntitySet="ELMAH_Error">
+                <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
+                <ScalarProperty Name="Application" ColumnName="Application" />
+                <ScalarProperty Name="Host" ColumnName="Host" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="User" ColumnName="User" />
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="TimeUtc" ColumnName="TimeUtc" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="AllXml" ColumnName="AllXml" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tbl_MstAccessMainMenu">
             <EntityTypeMapping TypeName="ERPDbModel.tbl_MstAccessMainMenu">
               <MappingFragment StoreEntitySet="tbl_MstAccessMainMenu">
@@ -508,7 +562,6 @@
           <EntitySetMapping Name="tbl_MstMerchants">
             <EntityTypeMapping TypeName="ERPDbModel.tbl_MstMerchants">
               <MappingFragment StoreEntitySet="tbl_MstMerchants">
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
                 <ScalarProperty Name="pkMerchantId" ColumnName="pkMerchantId" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -536,6 +589,8 @@
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifedDate" ColumnName="ModifedDate" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="PasswordResetCode" ColumnName="PasswordResetCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

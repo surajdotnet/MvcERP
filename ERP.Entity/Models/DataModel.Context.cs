@@ -25,6 +25,7 @@ namespace ERP.Entity.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<ELMAH_Error> ELMAH_Error { get; set; }
         public virtual DbSet<tbl_MstAccessMainMenu> tbl_MstAccessMainMenu { get; set; }
         public virtual DbSet<tbl_MstAccessPages> tbl_MstAccessPages { get; set; }
         public virtual DbSet<tbl_MstAccessSubMenu> tbl_MstAccessSubMenu { get; set; }
