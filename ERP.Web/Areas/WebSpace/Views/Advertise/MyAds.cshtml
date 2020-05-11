@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "MyAds";
+}
+
+<div class="main-grid-border">
+    <div class="container">
+        <h2 class="head">My Ads</h2>
+        <hr />
+        <div class="row">
+            @foreach (var item in ViewBag.Result)
+            {
+                <a href="/WebSpace/Advertise/ViewAd/@item.Add_Id">
+                    <div class="panel panel-info">
+                        <div class="panel-body">
+                            <div class="col-md-2" style="padding:5px;">
+                                @{
+                                    using (ERP.Entity.Models.ERPDbEntities db = new ERP.Entity.Models.ERPDbEntities())
+                                    {
+                                        int id = item.Id;
+                                        var image = db.tbl_Mst_AdvertiseImageXref.Where(x => x.fkAdd_Id == id).FirstOrDefault();
+                                        if (image.ImagePath != null)
+                                        {
+                                            string imagepath = image.ImagePath;
+                                            imagepath = "../../.." + imagepath.Substring(1);
+                                            <img class="img-responsive" src="@imagepath">
+                                        }
+
+                                    }
+                                }
+
+                            </div>
+                            <div class="col-md-5" style="padding:5px;">
+                                <section class="pull-left">
+                                    <h3 class="title"> @item.Add_Title</h3>
+                                    <span class="adprice">₹ @item.Selling_Price</span>
+                                    <span> @item.tbl_MstSubCategory.tbl_MstCategory.CategoryName » @item.tbl_MstSubCategory.SubCategoryName </span>
+                                </section>
+                            </div>
+                            <div class="col-md-5" style="padding:5px;">
+                                <section class="pull-right">
+                                    <span class="date">From: @item.CreatedDate</span><br />
+                                    <span class="date">To: @item.CreatedDate</span>
+                                    <span class="cityname">City @item.City</span>
+                                    @if (item.IsActive == 1)
+                                    {
+                                        <label class="label label-success">Active</label>
+                                    }
+                                    else
+                                    {
+                                        <label class="label label-danger">De-Active</label>
+                                    }
+                                </section>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <a href="~/WebSpace/Advertise/Edit/@item.Add_Id" class="btn btn-success"><i class="fa fa-pencil"></i></a>
+                        </div>
+                    </div>
+                </a>
+            }
+
+        </div>
+    </div>
+</div>

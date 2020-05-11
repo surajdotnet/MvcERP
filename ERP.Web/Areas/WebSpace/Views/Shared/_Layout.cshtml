@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title - Unique Enterprises</title>
+    <link rel="stylesheet" href="~/Content/WebSpace/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/WebSpace/css/bootstrap-select.css">
+    <link href="~/Content/WebSpace/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/Content/WebSpace/css/flexslider.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="~/Content/WebSpace/css/font-awesome.min.css" />
+    <!-- for-mobile-apps -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- //for-mobile-apps -->
+    <!--fonts-->
+    <link href='https://fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+    <!--//fonts-->
+    <!-- js -->
+    <script type="text/javascript" src="~/Content/WebSpace/js/jquery.min.js"></script>
+    <!-- js -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="~/Content/WebSpace/js/bootstrap.min.js"></script>
+    <script src="~/Content/WebSpace/js/bootstrap-select.js"></script>
+    <script src="~/Content/WebSpace/js/jquery.min.js"></script>
+
+    <script type="text/javascript" src="~/Content/WebSpace/js/jquery.leanModal.min.js"></script>
+    <link href="~/Content/WebSpace/css/jquery.uls.css" rel="stylesheet" />
+    <link href="~/Content/WebSpace/css/jquery.uls.grid.css" rel="stylesheet" />
+    <link href="~/Content/WebSpace/css/jquery.uls.lcd.css" rel="stylesheet" />
+    <!-- Source -->
+    <script src="~/Content/WebSpace/js/jquery.uls.data.js"></script>
+    <script src="~/Content/WebSpace/js/jquery.uls.data.utils.js"></script>
+    <script src="~/Content/WebSpace/js/jquery.uls.lcd.js"></script>
+    <script src="~/Content/WebSpace/js/jquery.uls.languagefilter.js"></script>
+    <script src="~/Content/WebSpace/js/jquery.uls.regionfilter.js"></script>
+    <script src="~/Content/WebSpace/js/jquery.uls.core.js"></script>
+
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="~/WebSpace/Home/Index"><span>Unique</span>Enterprises</a>
+            </div>
+            <div class="header-right">
+
+
+                @*<span class="active uls-trigger"><i class="glyphicon glyphicon-map-marker"></i> Ghaziabad</span>*@
+                @if (User.Identity.IsAuthenticated)
+                {
+                    using (ERP.Entity.Models.ERPDbEntities db = new ERP.Entity.Models.ERPDbEntities())
+                    {
+                        int id = Convert.ToInt32(User.Identity.Name);
+                        var user = db.tbl_MstMerchants.Where(x => x.pkMerchantId == id).FirstOrDefault();
+                        if (user != null)
+                        {
+                            //string imagepath = user.MerchantImage;
+                            //imagepath = "../.." + imagepath.Substring(1);
+                            @*<img class="rounded-circle header-profile-user" onerror="imgError(this);" src="@imagepath"
+                                alt="Header Avatar">*@
+                            <div class="selectregion dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                    Welcome... @user.FullName
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Post New Ad", "PostAd", "Advertise")</li>
+                                    <li>@Html.ActionLink("My Ads", "MyAds", "Advertise")</li>
+                                    <li><a href="#">My Account</a></li>
+                                    <li><a href="#">Change password</a></li>
+                                    <li>@Html.ActionLink("Log Out", "Logout", "Home")</li>
+                                </ul>
+                            </div>
+                        }
+                    }
+                }
+                else
+                {
+                    <div class="selectregion">
+                        @Html.ActionLink("Login", "Login", "Home", new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Register", "Register", "Home", new { @class = "btn btn-primary" })
+
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="content">
+        @RenderBody()
+
+    </div>
+    <footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="foo-grids">
+                    <div class="col-md-3 footer-grid">
+                        <h4 class="footer-head">Who We Are</h4>
+                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+                        <p>The point of using Lorem Ipsum is that it has a more-or-less normal letters, as opposed to using 'Content here.</p>
+                    </div>
+                    <div class="col-md-3 footer-grid">
+                        <h4 class="footer-head">Help</h4>
+                        <ul>
+                            <li><a href="#">How it Works</a></li>
+                            <li><a href="#">Sitemap</a></li>
+                            <li><a href="#">Faq</a></li>
+                            <li><a href="#">Feedback</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Shortcodes</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 footer-grid">
+                        <h4 class="footer-head">Information</h4>
+                        <ul>
+                            <li><a href="#">Locations Map</a></li>
+                            <li><a href="#">Terms of Use</a></li>
+                            <li><a href="#">Popular searches</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 footer-grid">
+                        <h4 class="footer-head">Contact Us</h4>
+                        <span class="hq">Our headquarters</span>
+                        <address>
+                            <ul class="location">
+                                <li><span class="glyphicon glyphicon-map-marker"></span></li>
+                                <li>Noida Uttar Pradesh</li>
+                                <div class="clearfix"></div>
+                            </ul>
+                            <ul class="location">
+                                <li><span class="glyphicon glyphicon-earphone"></span></li>
+                                <li>+91 9958988012</li>
+                                <div class="clearfix"></div>
+                            </ul>
+                            <ul class="location">
+                                <li><span class="glyphicon glyphicon-envelope"></span></li>
+                                <li><a href="mailto:uniqueenterprises044@gmail.com">uniqueenterprises044@gmail.com</a></li>
+                                <div class="clearfix"></div>
+                            </ul>
+                        </address>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom text-center">
+            <div class="container">
+                <div class="footer-logo">
+
+                    <a href="~/WebSpace/Home/Index"><span>Unique</span>Enterprises</a>
+                </div>
+                <div class="footer-social-icons">
+                    <ul>
+                        @*<li><a class="facebook" href="#"><span>Facebook</span></a></li>
+                        <li><a class="twitter" href="#"><span>Twitter</span></a></li>
+                        <li><a class="flickr" href="#"><span>Flickr</span></a></li>
+                        <li><a class="googleplus" href="#"><span>Google+</span></a></li>
+                        <li><a class="dribbble" href="#"><span>Dribbble</span></a></li>*@
+                    </ul>
+                </div>
+                <div class="copyrights">
+                    <p>&copy; @DateTime.Now.Year - Make Easy</p>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </footer>
+    <!--footer section end-->
+</body>
+</html>

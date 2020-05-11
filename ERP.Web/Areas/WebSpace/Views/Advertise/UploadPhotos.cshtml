@@ -1,0 +1,138 @@
+﻿
+@{
+    ViewBag.Title = "UploadPhotos";
+}
+<div class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="mdi mdi-check-all mr-2"></i>
+                        @TempData["Success"]
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                }
+                else
+                {
+                    if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="mdi mdi-block-helper mr-2"></i>
+                            @TempData["Error"]
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                    }
+
+                }
+
+
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb" style="margin-bottom: 5px;">
+                    <li><a href="~/WebSpace/Advertise/MyAds">Your Ad</a></li>
+                    <li><a href="#">Upload Photo</a></li>
+
+                </ol>
+
+                @using (Html.BeginForm("UploadPhotos", "Advertise", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+                {
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Select File:</label>
+                        <div class="col-sm-10">
+                            <input type="file" name="postedFiles" multiple="multiple" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <input type="submit" value="Upload"  />
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+
+        <div class="row product-view">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Sr No</th>
+                            <th>Photo</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.Result)
+                        {
+                            <tr>
+                                <td></td>
+                                @if (@item.ImagePath != null)
+                                {
+                                    string imagepath = @item.ImagePath;
+                                    imagepath = "../../.." + imagepath.Substring(1);
+                                    <td>
+                                        <img src="@imagepath" style="height:50px;width:50px;" />
+                                    </td>
+                                    <td>Delete</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12 product-view">
+                <h2>Preview Images</h2>
+                <div class="flexslider">
+                    <ul class="slides">
+                        @foreach (var item in ViewBag.Result)
+                        {
+                            if (@item.ImagePath != null)
+                            {
+                                string imagepath = @item.ImagePath;
+                                imagepath = "../../.." + imagepath.Substring(1);
+                                <li data-thumb="@imagepath">
+                                    <img src="@imagepath" />
+                                </li>
+                            }
+
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FlexSlider -->
+<script src="~/Content/WebSpace/js/jquery.flexslider.js"></script>
+<link href="~/Content/WebSpace/css/flexslider.css" rel="stylesheet" />
+
+<script>
+    // Can also be used with $(document).ready()
+    $(window).load(function () {
+        $('.flexslider').flexslider({
+            animation: "slide",
+            controlNav: "thumbnails"
+        });
+    });
+</script>
+<!-- //FlexSlider -->

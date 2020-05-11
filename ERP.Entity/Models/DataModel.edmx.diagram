@@ -4,17 +4,28 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d0ccc040c71f4057ab305728288d780d" Name="Diagram1">
-        <EntityTypeShape EntityType="ERPDbModel.ELMAH_Error" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERPDbModel.tbl_MstAccessMainMenu" Width="1.5" PointX="2.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERPDbModel.tbl_MstAccessPages" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERPDbModel.tbl_MstAccessSubMenu" Width="1.5" PointX="4.75" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERPDbModel.tbl_MstCategory" Width="1.5" PointX="5.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERPDbModel.tbl_MstEmails" Width="1.5" PointX="6.75" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERPDbModel.tbl_MstMerchants" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERPDbModel.tbl_MstMerchantsRoleXref" Width="1.5" PointX="3" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERPDbModel.tbl_MstRoles" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERPDbModel.tbl_MstSubCategory" Width="1.5" PointX="8" PointY="1" IsExpanded="true" />
+      <Diagram DiagramId="5533e62d97584037a7841eae20384a44" Name="Diagram1">
+        <EntityTypeShape EntityType="ERPDbModel.ELMAH_Error" Width="1.5" PointX="8.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERPDbModel.tbl_AdvertisePlansXref" Width="1.5" PointX="3" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERPDbModel.tbl_Mst_Advertise" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERPDbModel.tbl_Mst_AdvertiseImageXref" Width="1.5" PointX="7.5" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERPDbModel.tbl_Mst_AdvertisePlans" Width="1.5" PointX="0.75" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERPDbModel.tbl_MstAccessMainMenu" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERPDbModel.tbl_MstAccessPages" Width="1.5" PointX="10.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERPDbModel.tbl_MstAccessSubMenu" Width="1.5" PointX="10.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERPDbModel.tbl_MstCategory" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERPDbModel.tbl_MstEmails" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERPDbModel.tbl_MstMerchants" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERPDbModel.tbl_MstMerchantsRoleXref" Width="1.5" PointX="6" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERPDbModel.tbl_MstRoleAccess" Width="1.5" PointX="12.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERPDbModel.tbl_MstRoles" Width="1.5" PointX="3.75" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERPDbModel.tbl_MstSubCategory" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERPDbModel.tbl_RMASHEET" Width="1.5" PointX="8.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERPDbModel.tbl_MstSMSAPI" Width="1.5" PointX="12.75" PointY="9.75" IsExpanded="true" />
+        <AssociationConnector Association="ERPDbModel.FK_tbl_AdvertisePlansXref_tbl_Mst_AdvertisePlans" ManuallyRouted="false" />
+        <AssociationConnector Association="ERPDbModel.FK_tbl_AdvertisePlansXref_tbl_MstMerchants" ManuallyRouted="false" />
+        <AssociationConnector Association="ERPDbModel.FK_tbl_Mst_Advertise_tbl_MstSubCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="ERPDbModel.FK_tbl_Mst_AdvertiseImageXref_tbl_Mst_Advertise" ManuallyRouted="false" />
         <AssociationConnector Association="ERPDbModel.FK_tbl_MstSubCategory_tbl_MstCategory" ManuallyRouted="false" />
         <AssociationConnector Association="ERPDbModel.FK_tbl_MstMerchantsRoleXref_tbl_MstMerchants" ManuallyRouted="false" />
         <AssociationConnector Association="ERPDbModel.FK_tbl_MstMerchantsRoleXref_tbl_MstRoles" ManuallyRouted="false" />

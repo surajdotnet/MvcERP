@@ -17,6 +17,7 @@ namespace ERP.Entity.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tbl_MstMerchants()
         {
+            this.tbl_AdvertisePlansXref = new HashSet<tbl_AdvertisePlansXref>();
             this.tbl_MstMerchantsRoleXref = new HashSet<tbl_MstMerchantsRoleXref>();
         }
     
@@ -50,6 +51,8 @@ namespace ERP.Entity.Models
         public string PasswordHash { get; set; }
         public string PasswordResetCode { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_AdvertisePlansXref> tbl_AdvertisePlansXref { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_MstMerchantsRoleXref> tbl_MstMerchantsRoleXref { get; set; }
     }

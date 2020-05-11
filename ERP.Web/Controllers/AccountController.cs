@@ -200,6 +200,33 @@ namespace ERP.Web.Controllers
             }
 
         }
+        [HttpPost]
+        public ActionResult ChangePassword(ChangePasswordModel obj)
+        {
+            if (ModelState.IsValid)
+            {
+                int id = Convert.ToInt32(User.Identity.Name);
+                var user = db.tbl_MstMerchants.Where(x => x.pkMerchantId == id).FirstOrDefault();
+                if (user.PasswordHash==obj.OldPassword)
+                {
+                    user.PasswordHash = obj.NewPassword;
+                    db.Configuration.ValidateOnSaveEnabled = false;
+                    db.SaveChanges();
+                    TempData["Success"] = "Your Password has been changed successfully";
+                }
+                else
+                {
+                    TempData["Error"] = "Please enter your correct current password.";
+                }
+            }
+            else
+            {
+                TempData["Error"] = "Somthing went wrong";
+            }
+            return View(obj);
+
+        }
+
         [AllowAnonymous]
         public ActionResult RecoverPassword()
         {
@@ -299,7 +326,7 @@ namespace ERP.Web.Controllers
                     body = body.Replace("{Password}", user.PasswordHash);
                     em.MessageBody = body;
                     em.SendEmail();
-                    TempData["Success"] = "Your Password has benn changed successfully";
+                    TempData["Success"] = "Your Password has been changed successfully";
                 }
             }
             else

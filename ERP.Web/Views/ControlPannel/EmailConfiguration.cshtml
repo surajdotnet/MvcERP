@@ -19,7 +19,41 @@
     </div>
 </div>
 <!-- end page title -->
+<div class="row">
+    <div class="col-md-12">
 
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="mdi mdi-check-all mr-2"></i>
+                @TempData["Success"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+        }
+        else
+        {
+            if (TempData["Error"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="mdi mdi-block-helper mr-2"></i>
+                    @TempData["Error"]
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            }
+
+        }
+
+
+    </div>
+
+
+</div>
 <div class="row">
     @foreach (var item in ViewBag.Result)
     {
@@ -30,44 +64,226 @@
                         <div class="avatar-md mr-4">
                             <span class="avatar-title rounded-circle bg-light text-danger font-size-16">
                                 <img src="~/Content/images/email.png" alt="" height="30">
-                               
+
                             </span>
                         </div>
 
                         <div class="media-body overflow-hidden">
                             <h5 class="text-truncate font-size-15"><a href="#" class="text-dark">@item.DisplayName</a></h5>
                             <p class="text-muted mb-4">@item.Email</p>
-                            <p>SMTP: @item.Smtp_Server</p>
+                            <p>SMTP:<br/> @item.Smtp_Server</p>
                         </div>
                     </div>
                 </div>
                 <div class="px-4 py-3 border-top">
                     <ul class="list-inline mb-0">
                         <li class="list-inline-item mr-3">
-                            @if (item.IsActive == "1")
+                            @if (item.IsActive == 1)
                             {
-                                <label class="badge badge-success">Active</label>
+                                <label>Status:</label> <label class="badge badge-success">Active</label>
                             }
 
                             else
                             {
-                                <label class="badge badge-danger"> In-Active</label>
+                                <label>Status:</label> <label class="badge badge-danger"> In-Active</label>
                             }
-                            
+
                         </li>
-                        <li class="list-inline-item mr-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="Due Date">
-                            <i class="bx bx-calendar mr-1"></i> 15 Oct, 19
+                        
+                        <li class="list-inline-item mr-3" style="cursor:pointer;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add Email">
+                            <a href="#"  data-toggle="modal" data-target="#myModaladdEmail"> <i class="bx bx-plus mr-2"></i>Add</a>
                         </li>
-                        <li class="list-inline-item mr-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="Comments">
-                            <i class="bx bx-comment-dots mr-1"></i> 214
+                        <li class="list-inline-item mr-3" style="cursor:pointer;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Modify Setting">
+                            <a href="#" onclick="GetEmail(@item.pkId)" data-toggle="modal" data-target="#myModalModifyEmail"> <i class="bx bx-pencil mr-1"></i>Modify</a>
+                        </li>
+                        <li class="list-inline-item mr-3" style="cursor:pointer;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Send Test Email">
+                            <a href="#" data-toggle="modal" data-target="#myModalTestEmail"><i class="bx bx-message"></i>Test Email</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
     }
-
-
-
 </div>
 
+<!-- sample modal content -->
+<div id="myModalTestEmail" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myModalLabel">Send Test Email</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("SendTestEmail", "ControlPannel", FormMethod.Post))
+            {
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" />
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea class="form-control" rows="5" id="MessageBody" name="MessageBody">
+This is test email from ERP
+</textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light">Send</button>
+                </div>
+            }
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- sample modal content -->
+<div id="myModalModifyEmail" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myModalLabel">Modify Email</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("PutEmail", "ControlPannel", FormMethod.Post))
+            {
+                <input type="hidden" id="Id" name="Id" value="" />
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Display Name:</label>
+                        <input type="text" class="form-control" id="DisplayName" name="DisplayName" />
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" class="form-control" id="Email" name="Email" />
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" id="Password" name="Password" />
+                    </div>
+                    <div class="form-group">
+                        <label>SMTP Server</label>
+                        <input type="text" class="form-control" id="Smtp_Server" name="Smtp_Server" />
+                    </div>
+                    <div class="form-group">
+                        <label>SSl</label>
+                        <select class="form-control" id="IsEnableSSL" name="IsEnableSSL">
+                            <option value="1">True</option>
+                            <option value="0">False</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>InComming Port</label>
+                        <input type="text" class="form-control" id="Incomming_Port" name="Incomming_Port" />
+
+                    </div>
+                    <div class="form-group">
+                        <label>Outgoing Port</label>
+                        <input type="text" class="form-control" id="Outgoing_Port" name="Outgoing_Port" />
+
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select class="form-control" id="IsActive" name="IsActive">
+                            <option value="1">True</option>
+                            <option value="0">False</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light">Modify</button>
+                </div>
+            }
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<div id="myModaladdEmail" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myModalLabel">Add Email</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("PostEmail", "ControlPannel", FormMethod.Post))
+            {
+                
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Display Name:</label>
+                        <input type="text" class="form-control" id="DisplayName1" name="DisplayName1" />
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" class="form-control" id="Email1" name="Email1" />
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" id="Password1" name="Password1" />
+                    </div>
+                    <div class="form-group">
+                        <label>SMTP Server</label>
+                        <input type="text" class="form-control" id="Smtp_Server1" name="Smtp_Server1" />
+                    </div>
+                    <div class="form-group">
+                        <label>SSl</label>
+                        <select class="form-control" id="isEnableSSL1" name="isEnableSSL1">
+                            <option value="1">True</option>
+                            <option value="0">False</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>InComming Port</label>
+                        <input type="text" class="form-control" id="Incomming_Port" name="Incomming_Port1" />
+
+                    </div>
+                    <div class="form-group">
+                        <label>Outgoing Port</label>
+                        <input type="text" class="form-control" id="Outgoing_Port1" name="Outgoing_Port1" />
+
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select class="form-control" id="IsActive1" name="IsActive1">
+                            <option value="1">True</option>
+                            <option value="0">False</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light">Save</button>
+                </div>
+            }
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<script type="text/javascript">
+    function GetEmail(id) {
+        $.getJSON("/ControlPannel/GetEmail/" + id, function (data) {
+     
+            var myData = data;
+            $("#Id").val(myData.pkId);
+            $("#DisplayName").val(myData.DisplayName);
+            $("#Email").val(myData.Email);
+            $("#Password").val(myData.Password);
+            $("#IsEnableSSL").val(myData.IsEnableSSL);
+            $("#Smtp_Server").val(myData.Smtp_Server);
+            $("#Incomming_Port").val(myData.Incomming_Port);
+            $("#Outgoing_Port").val(myData.Outgoing_Port);
+            $("#IsActive").val(myData.IsActive);
+        });
+       }
+
+</script> 

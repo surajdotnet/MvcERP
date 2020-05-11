@@ -21,11 +21,83 @@
           <Property Name="Sequence" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AllXml" Type="ntext" Nullable="false" />
         </EntityType>
+        <EntityType Name="tbl_AdvertisePlansXref">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fkMerchantId" Type="int" />
+          <Property Name="fkPlanId" Type="int" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifedBy" Type="int" />
+          <Property Name="ModifedDate" Type="datetime" />
+          <Property Name="IsActive" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_Mst_Advertise">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fkSubCategory" Type="int" />
+          <Property Name="Add_Id" Type="nvarchar(max)" />
+          <Property Name="Add_Title" Type="nvarchar(max)" />
+          <Property Name="Add_Description" Type="nvarchar(max)" />
+          <Property Name="Brand" Type="nvarchar" MaxLength="500" />
+          <Property Name="Model" Type="nvarchar" MaxLength="500" />
+          <Property Name="Year" Type="nvarchar" MaxLength="500" />
+          <Property Name="Selling_Price" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IsMobileView" Type="int" />
+          <Property Name="Geo_Lat" Type="nvarchar(max)" />
+          <Property Name="Geo_Long" Type="nvarchar(max)" />
+          <Property Name="State" Type="nvarchar(max)" />
+          <Property Name="City" Type="nvarchar(max)" />
+          <Property Name="Neighbourhood" Type="nvarchar(max)" />
+          <Property Name="ValidTill" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsActive" Type="int" />
+          <Property Name="Ad_Views" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_Mst_AdvertiseImageXref">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fkAdd_Id" Type="int" />
+          <Property Name="ImagePath" Type="nvarchar(max)" />
+          <Property Name="ImagePath_Thumb" Type="nvarchar(max)" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifedDate" Type="datetime" />
+          <Property Name="IsActive" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_Mst_AdvertisePlans">
+          <Key>
+            <PropertyRef Name="pkId" />
+          </Key>
+          <Property Name="pkId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PlanName" Type="nvarchar" MaxLength="500" />
+          <Property Name="PlanDescription" Type="nvarchar(max)" />
+          <Property Name="ListingLimit" Type="int" />
+          <Property Name="PlanValue" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PlanLimitInDays" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifedBy" Type="int" />
+          <Property Name="ModifedDate" Type="datetime" />
+          <Property Name="IsActive" Type="int" />
+        </EntityType>
         <EntityType Name="tbl_MstAccessMainMenu">
           <Key>
             <PropertyRef Name="pkMainMenuId" />
           </Key>
-          <Property Name="pkMainMenuId" Type="int" Nullable="false" />
+          <Property Name="pkMainMenuId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MenuName" Type="nvarchar(max)" />
           <Property Name="fkPageId" Type="int" />
           <Property Name="CreatedBy" Type="int" />
@@ -140,6 +212,19 @@
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="IsActive" Type="int" />
         </EntityType>
+        <EntityType Name="tbl_MstRoleAccess">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fkRoleId" Type="int" />
+          <Property Name="fkPageId" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsActive" Type="int" />
+        </EntityType>
         <EntityType Name="tbl_MstRoles">
           <Key>
             <PropertyRef Name="pkId" />
@@ -151,6 +236,22 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsActive" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ERPDb.dbo.tbl_MstSMSAPI' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tbl_MstSMSAPI">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Base_Url" Type="nvarchar(max)" />
+          <Property Name="Auth_Key" Type="nvarchar(max)" />
+          <Property Name="Sender_Id" Type="nvarchar(max)" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifedBy" Type="int" />
+          <Property Name="ModifedDate" Type="datetime" />
           <Property Name="IsActive" Type="int" />
         </EntityType>
         <EntityType Name="tbl_MstSubCategory">
@@ -167,6 +268,90 @@
           <Property Name="ModifedDate" Type="datetime" />
           <Property Name="IsActive" Type="int" />
         </EntityType>
+        <EntityType Name="tbl_RMASHEET">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CP_NO" Type="nvarchar(max)" />
+          <Property Name="JOB_NO" Type="nvarchar(max)" />
+          <Property Name="PARTY" Type="nvarchar(max)" />
+          <Property Name="UID" Type="nvarchar(max)" />
+          <Property Name="GRADE" Type="nvarchar(max)" />
+          <Property Name="BILLET_SIZE" Type="nvarchar(max)" />
+          <Property Name="APPROX_TON_PENDING" Type="nvarchar(max)" />
+          <Property Name="S_PER" Type="nvarchar(max)" />
+          <Property Name="P_PER" Type="nvarchar(max)" />
+          <Property Name="LEN_FINISH_MAT" Type="nvarchar(max)" />
+          <Property Name="B" Type="nvarchar(max)" />
+          <Property Name="ED_DATE" Type="nvarchar(max)" />
+          <Property Name="TDC_REF" Type="nvarchar(max)" />
+          <Property Name="INT_PRODUCT_STD_SERIES_NO" Type="nvarchar(max)" />
+          <Property Name="BILLET_LENGTH" Type="nvarchar(max)" />
+          <Property Name="NO_OF_PCS" Type="nvarchar(max)" />
+          <Property Name="APPROX_QTY_BILLET" Type="nvarchar(max)" />
+          <Property Name="SIZE_FOR_ROLLING" Type="nvarchar(max)" />
+          <Property Name="SHAPE" Type="nvarchar(max)" />
+          <Property Name="FINISHED_SIZE" Type="nvarchar(max)" />
+          <Property Name="RMA_NO" Type="nvarchar(max)" />
+          <Property Name="HEAT_NO" Type="nvarchar(max)" />
+          <Property Name="PCS" Type="nvarchar(max)" />
+          <Property Name="REMARK" Type="nvarchar(max)" />
+          <Property Name="STATUS" Type="nvarchar(max)" />
+          <Property Name="RMA_DT" Type="nvarchar(max)" />
+          <Property Name="REPLAN" Type="nvarchar(max)" />
+          <Property Name="DEPARTMENT" Type="nvarchar(max)" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_tbl_AdvertisePlansXref_tbl_Mst_AdvertisePlans">
+          <End Role="tbl_Mst_AdvertisePlans" Type="Self.tbl_Mst_AdvertisePlans" Multiplicity="0..1" />
+          <End Role="tbl_AdvertisePlansXref" Type="Self.tbl_AdvertisePlansXref" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Mst_AdvertisePlans">
+              <PropertyRef Name="pkId" />
+            </Principal>
+            <Dependent Role="tbl_AdvertisePlansXref">
+              <PropertyRef Name="fkPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_AdvertisePlansXref_tbl_MstMerchants">
+          <End Role="tbl_MstMerchants" Type="Self.tbl_MstMerchants" Multiplicity="0..1" />
+          <End Role="tbl_AdvertisePlansXref" Type="Self.tbl_AdvertisePlansXref" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_MstMerchants">
+              <PropertyRef Name="pkMerchantId" />
+            </Principal>
+            <Dependent Role="tbl_AdvertisePlansXref">
+              <PropertyRef Name="fkMerchantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Mst_Advertise_tbl_MstSubCategory">
+          <End Role="tbl_MstSubCategory" Type="Self.tbl_MstSubCategory" Multiplicity="0..1" />
+          <End Role="tbl_Mst_Advertise" Type="Self.tbl_Mst_Advertise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_MstSubCategory">
+              <PropertyRef Name="pkId" />
+            </Principal>
+            <Dependent Role="tbl_Mst_Advertise">
+              <PropertyRef Name="fkSubCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Mst_AdvertiseImageXref_tbl_Mst_Advertise">
+          <End Role="tbl_Mst_Advertise" Type="Self.tbl_Mst_Advertise" Multiplicity="0..1" />
+          <End Role="tbl_Mst_AdvertiseImageXref" Type="Self.tbl_Mst_AdvertiseImageXref" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Mst_Advertise">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Mst_AdvertiseImageXref">
+              <PropertyRef Name="fkAdd_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tbl_MstMerchantsRoleXref_tbl_MstMerchants">
           <End Role="tbl_MstMerchants" Type="Self.tbl_MstMerchants" Multiplicity="0..1" />
           <End Role="tbl_MstMerchantsRoleXref" Type="Self.tbl_MstMerchantsRoleXref" Multiplicity="*" />
@@ -203,8 +388,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="ELMAH_GetErrorsXml" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Application" Type="nvarchar" Mode="In" />
+          <Parameter Name="PageIndex" Type="int" Mode="In" />
+          <Parameter Name="PageSize" Type="int" Mode="In" />
+          <Parameter Name="TotalCount" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="ELMAH_GetErrorXml" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Application" Type="nvarchar" Mode="In" />
+          <Parameter Name="ErrorId" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="ELMAH_LogError" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ErrorId" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="Application" Type="nvarchar" Mode="In" />
+          <Parameter Name="Host" Type="nvarchar" Mode="In" />
+          <Parameter Name="Type" Type="nvarchar" Mode="In" />
+          <Parameter Name="Source" Type="nvarchar" Mode="In" />
+          <Parameter Name="Message" Type="nvarchar" Mode="In" />
+          <Parameter Name="User" Type="nvarchar" Mode="In" />
+          <Parameter Name="AllXml" Type="ntext" Mode="In" />
+          <Parameter Name="StatusCode" Type="int" Mode="In" />
+          <Parameter Name="TimeUtc" Type="datetime" Mode="In" />
+        </Function>
         <EntityContainer Name="ERPDbModelStoreContainer">
           <EntitySet Name="ELMAH_Error" EntityType="Self.ELMAH_Error" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_AdvertisePlansXref" EntityType="Self.tbl_AdvertisePlansXref" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Mst_Advertise" EntityType="Self.tbl_Mst_Advertise" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Mst_AdvertiseImageXref" EntityType="Self.tbl_Mst_AdvertiseImageXref" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Mst_AdvertisePlans" EntityType="Self.tbl_Mst_AdvertisePlans" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_MstAccessMainMenu" EntityType="Self.tbl_MstAccessMainMenu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_MstAccessPages" EntityType="Self.tbl_MstAccessPages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_MstAccessSubMenu" EntityType="Self.tbl_MstAccessSubMenu" Schema="dbo" store:Type="Tables" />
@@ -212,8 +423,39 @@
           <EntitySet Name="tbl_MstEmails" EntityType="Self.tbl_MstEmails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_MstMerchants" EntityType="Self.tbl_MstMerchants" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_MstMerchantsRoleXref" EntityType="Self.tbl_MstMerchantsRoleXref" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_MstRoleAccess" EntityType="Self.tbl_MstRoleAccess" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_MstRoles" EntityType="Self.tbl_MstRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_MstSubCategory" EntityType="Self.tbl_MstSubCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_RMASHEET" EntityType="Self.tbl_RMASHEET" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_MstSMSAPI" EntityType="Self.tbl_MstSMSAPI" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tbl_MstSMSAPI].[Id] AS [Id], 
+    [tbl_MstSMSAPI].[Base_Url] AS [Base_Url], 
+    [tbl_MstSMSAPI].[Auth_Key] AS [Auth_Key], 
+    [tbl_MstSMSAPI].[Sender_Id] AS [Sender_Id], 
+    [tbl_MstSMSAPI].[CreatedBy] AS [CreatedBy], 
+    [tbl_MstSMSAPI].[CreatedDate] AS [CreatedDate], 
+    [tbl_MstSMSAPI].[ModifedBy] AS [ModifedBy], 
+    [tbl_MstSMSAPI].[ModifedDate] AS [ModifedDate], 
+    [tbl_MstSMSAPI].[IsActive] AS [IsActive]
+    FROM [dbo].[tbl_MstSMSAPI] AS [tbl_MstSMSAPI]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_tbl_AdvertisePlansXref_tbl_Mst_AdvertisePlans" Association="Self.FK_tbl_AdvertisePlansXref_tbl_Mst_AdvertisePlans">
+            <End Role="tbl_Mst_AdvertisePlans" EntitySet="tbl_Mst_AdvertisePlans" />
+            <End Role="tbl_AdvertisePlansXref" EntitySet="tbl_AdvertisePlansXref" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_AdvertisePlansXref_tbl_MstMerchants" Association="Self.FK_tbl_AdvertisePlansXref_tbl_MstMerchants">
+            <End Role="tbl_MstMerchants" EntitySet="tbl_MstMerchants" />
+            <End Role="tbl_AdvertisePlansXref" EntitySet="tbl_AdvertisePlansXref" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Mst_Advertise_tbl_MstSubCategory" Association="Self.FK_tbl_Mst_Advertise_tbl_MstSubCategory">
+            <End Role="tbl_MstSubCategory" EntitySet="tbl_MstSubCategory" />
+            <End Role="tbl_Mst_Advertise" EntitySet="tbl_Mst_Advertise" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Mst_AdvertiseImageXref_tbl_Mst_Advertise" Association="Self.FK_tbl_Mst_AdvertiseImageXref_tbl_Mst_Advertise">
+            <End Role="tbl_Mst_Advertise" EntitySet="tbl_Mst_Advertise" />
+            <End Role="tbl_Mst_AdvertiseImageXref" EntitySet="tbl_Mst_AdvertiseImageXref" />
+          </AssociationSet>
           <AssociationSet Name="FK_tbl_MstMerchantsRoleXref_tbl_MstMerchants" Association="Self.FK_tbl_MstMerchantsRoleXref_tbl_MstMerchants">
             <End Role="tbl_MstMerchants" EntitySet="tbl_MstMerchants" />
             <End Role="tbl_MstMerchantsRoleXref" EntitySet="tbl_MstMerchantsRoleXref" />
@@ -248,11 +490,89 @@
           <Property Name="Sequence" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AllXml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
+        <EntityType Name="tbl_AdvertisePlansXref">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fkMerchantId" Type="Int32" />
+          <Property Name="fkPlanId" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifedBy" Type="Int32" />
+          <Property Name="ModifedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Int32" />
+          <NavigationProperty Name="tbl_Mst_AdvertisePlans" Relationship="Self.FK_tbl_AdvertisePlansXref_tbl_Mst_AdvertisePlans" FromRole="tbl_AdvertisePlansXref" ToRole="tbl_Mst_AdvertisePlans" />
+          <NavigationProperty Name="tbl_MstMerchants" Relationship="Self.FK_tbl_AdvertisePlansXref_tbl_MstMerchants" FromRole="tbl_AdvertisePlansXref" ToRole="tbl_MstMerchants" />
+        </EntityType>
+        <EntityType Name="tbl_Mst_Advertise">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fkSubCategory" Type="Int32" />
+          <Property Name="Add_Id" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Add_Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Add_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Brand" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Year" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Selling_Price" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IsMobileView" Type="Int32" />
+          <Property Name="Geo_Lat" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Geo_Long" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Neighbourhood" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ValidTill" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Int32" />
+          <Property Name="Ad_Views" Type="Int32" />
+          <NavigationProperty Name="tbl_MstSubCategory" Relationship="Self.FK_tbl_Mst_Advertise_tbl_MstSubCategory" FromRole="tbl_Mst_Advertise" ToRole="tbl_MstSubCategory" />
+          <NavigationProperty Name="tbl_Mst_AdvertiseImageXref" Relationship="Self.FK_tbl_Mst_AdvertiseImageXref_tbl_Mst_Advertise" FromRole="tbl_Mst_Advertise" ToRole="tbl_Mst_AdvertiseImageXref" />
+        </EntityType>
+        <EntityType Name="tbl_Mst_AdvertiseImageXref">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fkAdd_Id" Type="Int32" />
+          <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ImagePath_Thumb" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Int32" />
+          <NavigationProperty Name="tbl_Mst_Advertise" Relationship="Self.FK_tbl_Mst_AdvertiseImageXref_tbl_Mst_Advertise" FromRole="tbl_Mst_AdvertiseImageXref" ToRole="tbl_Mst_Advertise" />
+        </EntityType>
+        <EntityType Name="tbl_Mst_AdvertisePlans">
+          <Key>
+            <PropertyRef Name="pkId" />
+          </Key>
+          <Property Name="pkId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlanName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PlanDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ListingLimit" Type="Int32" />
+          <Property Name="PlanValue" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PlanLimitInDays" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifedBy" Type="Int32" />
+          <Property Name="ModifedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Int32" />
+          <NavigationProperty Name="tbl_AdvertisePlansXref" Relationship="Self.FK_tbl_AdvertisePlansXref_tbl_Mst_AdvertisePlans" FromRole="tbl_Mst_AdvertisePlans" ToRole="tbl_AdvertisePlansXref" />
+        </EntityType>
         <EntityType Name="tbl_MstAccessMainMenu">
           <Key>
             <PropertyRef Name="pkMainMenuId" />
           </Key>
-          <Property Name="pkMainMenuId" Type="Int32" Nullable="false" />
+          <Property Name="pkMainMenuId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MenuName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="fkPageId" Type="Int32" />
           <Property Name="CreatedBy" Type="Int32" />
@@ -353,6 +673,7 @@
           <Property Name="IsActive" Type="Int32" />
           <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PasswordResetCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_AdvertisePlansXref" Relationship="Self.FK_tbl_AdvertisePlansXref_tbl_MstMerchants" FromRole="tbl_MstMerchants" ToRole="tbl_AdvertisePlansXref" />
           <NavigationProperty Name="tbl_MstMerchantsRoleXref" Relationship="Self.FK_tbl_MstMerchantsRoleXref_tbl_MstMerchants" FromRole="tbl_MstMerchants" ToRole="tbl_MstMerchantsRoleXref" />
         </EntityType>
         <EntityType Name="tbl_MstMerchantsRoleXref">
@@ -370,6 +691,19 @@
           <Property Name="IsActive" Type="Int32" />
           <NavigationProperty Name="tbl_MstMerchants" Relationship="Self.FK_tbl_MstMerchantsRoleXref_tbl_MstMerchants" FromRole="tbl_MstMerchantsRoleXref" ToRole="tbl_MstMerchants" />
           <NavigationProperty Name="tbl_MstRoles" Relationship="Self.FK_tbl_MstMerchantsRoleXref_tbl_MstRoles" FromRole="tbl_MstMerchantsRoleXref" ToRole="tbl_MstRoles" />
+        </EntityType>
+        <EntityType Name="tbl_MstRoleAccess">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fkRoleId" Type="Int32" />
+          <Property Name="fkPageId" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Int32" />
         </EntityType>
         <EntityType Name="tbl_MstRoles">
           <Key>
@@ -398,8 +732,107 @@
           <Property Name="ModifedBy" Type="Int32" />
           <Property Name="ModifedDate" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Int32" />
+          <NavigationProperty Name="tbl_Mst_Advertise" Relationship="Self.FK_tbl_Mst_Advertise_tbl_MstSubCategory" FromRole="tbl_MstSubCategory" ToRole="tbl_Mst_Advertise" />
           <NavigationProperty Name="tbl_MstCategory" Relationship="Self.FK_tbl_MstSubCategory_tbl_MstCategory" FromRole="tbl_MstSubCategory" ToRole="tbl_MstCategory" />
         </EntityType>
+        <EntityType Name="tbl_RMASHEET">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CP_NO" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="JOB_NO" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PARTY" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="GRADE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BILLET_SIZE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="APPROX_TON_PENDING" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="S_PER" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="P_PER" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LEN_FINISH_MAT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="B" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ED_DATE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TDC_REF" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="INT_PRODUCT_STD_SERIES_NO" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BILLET_LENGTH" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NO_OF_PCS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="APPROX_QTY_BILLET" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SIZE_FOR_ROLLING" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SHAPE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FINISHED_SIZE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RMA_NO" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="HEAT_NO" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PCS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="REMARK" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="STATUS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RMA_DT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="REPLAN" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DEPARTMENT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_MstSMSAPI">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Base_Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Auth_Key" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Sender_Id" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifedBy" Type="Int32" />
+          <Property Name="ModifedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_tbl_AdvertisePlansXref_tbl_Mst_AdvertisePlans">
+          <End Role="tbl_Mst_AdvertisePlans" Type="Self.tbl_Mst_AdvertisePlans" Multiplicity="0..1" />
+          <End Role="tbl_AdvertisePlansXref" Type="Self.tbl_AdvertisePlansXref" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Mst_AdvertisePlans">
+              <PropertyRef Name="pkId" />
+            </Principal>
+            <Dependent Role="tbl_AdvertisePlansXref">
+              <PropertyRef Name="fkPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_AdvertisePlansXref_tbl_MstMerchants">
+          <End Role="tbl_MstMerchants" Type="Self.tbl_MstMerchants" Multiplicity="0..1" />
+          <End Role="tbl_AdvertisePlansXref" Type="Self.tbl_AdvertisePlansXref" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_MstMerchants">
+              <PropertyRef Name="pkMerchantId" />
+            </Principal>
+            <Dependent Role="tbl_AdvertisePlansXref">
+              <PropertyRef Name="fkMerchantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Mst_Advertise_tbl_MstSubCategory">
+          <End Role="tbl_MstSubCategory" Type="Self.tbl_MstSubCategory" Multiplicity="0..1" />
+          <End Role="tbl_Mst_Advertise" Type="Self.tbl_Mst_Advertise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_MstSubCategory">
+              <PropertyRef Name="pkId" />
+            </Principal>
+            <Dependent Role="tbl_Mst_Advertise">
+              <PropertyRef Name="fkSubCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Mst_AdvertiseImageXref_tbl_Mst_Advertise">
+          <End Role="tbl_Mst_Advertise" Type="Self.tbl_Mst_Advertise" Multiplicity="0..1" />
+          <End Role="tbl_Mst_AdvertiseImageXref" Type="Self.tbl_Mst_AdvertiseImageXref" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Mst_Advertise">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Mst_AdvertiseImageXref">
+              <PropertyRef Name="fkAdd_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tbl_MstSubCategory_tbl_MstCategory">
           <End Role="tbl_MstCategory" Type="Self.tbl_MstCategory" Multiplicity="0..1" />
           <End Role="tbl_MstSubCategory" Type="Self.tbl_MstSubCategory" Multiplicity="*" />
@@ -438,6 +871,10 @@
         </Association>
         <EntityContainer Name="ERPDbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ELMAH_Error" EntityType="Self.ELMAH_Error" />
+          <EntitySet Name="tbl_AdvertisePlansXref" EntityType="Self.tbl_AdvertisePlansXref" />
+          <EntitySet Name="tbl_Mst_Advertise" EntityType="Self.tbl_Mst_Advertise" />
+          <EntitySet Name="tbl_Mst_AdvertiseImageXref" EntityType="Self.tbl_Mst_AdvertiseImageXref" />
+          <EntitySet Name="tbl_Mst_AdvertisePlans" EntityType="Self.tbl_Mst_AdvertisePlans" />
           <EntitySet Name="tbl_MstAccessMainMenu" EntityType="Self.tbl_MstAccessMainMenu" />
           <EntitySet Name="tbl_MstAccessPages" EntityType="Self.tbl_MstAccessPages" />
           <EntitySet Name="tbl_MstAccessSubMenu" EntityType="Self.tbl_MstAccessSubMenu" />
@@ -445,8 +882,27 @@
           <EntitySet Name="tbl_MstEmails" EntityType="Self.tbl_MstEmails" />
           <EntitySet Name="tbl_MstMerchants" EntityType="Self.tbl_MstMerchants" />
           <EntitySet Name="tbl_MstMerchantsRoleXref" EntityType="Self.tbl_MstMerchantsRoleXref" />
+          <EntitySet Name="tbl_MstRoleAccess" EntityType="Self.tbl_MstRoleAccess" />
           <EntitySet Name="tbl_MstRoles" EntityType="Self.tbl_MstRoles" />
           <EntitySet Name="tbl_MstSubCategory" EntityType="Self.tbl_MstSubCategory" />
+          <EntitySet Name="tbl_RMASHEET" EntityType="Self.tbl_RMASHEET" />
+          <EntitySet Name="tbl_MstSMSAPI" EntityType="Self.tbl_MstSMSAPI" />
+          <AssociationSet Name="FK_tbl_AdvertisePlansXref_tbl_Mst_AdvertisePlans" Association="Self.FK_tbl_AdvertisePlansXref_tbl_Mst_AdvertisePlans">
+            <End Role="tbl_Mst_AdvertisePlans" EntitySet="tbl_Mst_AdvertisePlans" />
+            <End Role="tbl_AdvertisePlansXref" EntitySet="tbl_AdvertisePlansXref" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_AdvertisePlansXref_tbl_MstMerchants" Association="Self.FK_tbl_AdvertisePlansXref_tbl_MstMerchants">
+            <End Role="tbl_MstMerchants" EntitySet="tbl_MstMerchants" />
+            <End Role="tbl_AdvertisePlansXref" EntitySet="tbl_AdvertisePlansXref" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Mst_Advertise_tbl_MstSubCategory" Association="Self.FK_tbl_Mst_Advertise_tbl_MstSubCategory">
+            <End Role="tbl_MstSubCategory" EntitySet="tbl_MstSubCategory" />
+            <End Role="tbl_Mst_Advertise" EntitySet="tbl_Mst_Advertise" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Mst_AdvertiseImageXref_tbl_Mst_Advertise" Association="Self.FK_tbl_Mst_AdvertiseImageXref_tbl_Mst_Advertise">
+            <End Role="tbl_Mst_Advertise" EntitySet="tbl_Mst_Advertise" />
+            <End Role="tbl_Mst_AdvertiseImageXref" EntitySet="tbl_Mst_AdvertiseImageXref" />
+          </AssociationSet>
           <AssociationSet Name="FK_tbl_MstSubCategory_tbl_MstCategory" Association="Self.FK_tbl_MstSubCategory_tbl_MstCategory">
             <End Role="tbl_MstCategory" EntitySet="tbl_MstCategory" />
             <End Role="tbl_MstSubCategory" EntitySet="tbl_MstSubCategory" />
@@ -459,6 +915,28 @@
             <End Role="tbl_MstRoles" EntitySet="tbl_MstRoles" />
             <End Role="tbl_MstMerchantsRoleXref" EntitySet="tbl_MstMerchantsRoleXref" />
           </AssociationSet>
+          <FunctionImport Name="ELMAH_GetErrorsXml" ReturnType="Collection(String)">
+            <Parameter Name="Application" Mode="In" Type="String" />
+            <Parameter Name="PageIndex" Mode="In" Type="Int32" />
+            <Parameter Name="PageSize" Mode="In" Type="Int32" />
+            <Parameter Name="TotalCount" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ELMAH_GetErrorXml" ReturnType="Collection(String)">
+            <Parameter Name="Application" Mode="In" Type="String" />
+            <Parameter Name="ErrorId" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="ELMAH_LogError">
+            <Parameter Name="ErrorId" Mode="In" Type="Guid" />
+            <Parameter Name="Application" Mode="In" Type="String" />
+            <Parameter Name="Host" Mode="In" Type="String" />
+            <Parameter Name="Type" Mode="In" Type="String" />
+            <Parameter Name="Source" Mode="In" Type="String" />
+            <Parameter Name="Message" Mode="In" Type="String" />
+            <Parameter Name="User" Mode="In" Type="String" />
+            <Parameter Name="AllXml" Mode="In" Type="String" />
+            <Parameter Name="StatusCode" Mode="In" Type="Int32" />
+            <Parameter Name="TimeUtc" Mode="In" Type="DateTime" />
+          </FunctionImport>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -480,6 +958,82 @@
                 <ScalarProperty Name="TimeUtc" ColumnName="TimeUtc" />
                 <ScalarProperty Name="Sequence" ColumnName="Sequence" />
                 <ScalarProperty Name="AllXml" ColumnName="AllXml" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_AdvertisePlansXref">
+            <EntityTypeMapping TypeName="ERPDbModel.tbl_AdvertisePlansXref">
+              <MappingFragment StoreEntitySet="tbl_AdvertisePlansXref">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="fkMerchantId" ColumnName="fkMerchantId" />
+                <ScalarProperty Name="fkPlanId" ColumnName="fkPlanId" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifedBy" ColumnName="ModifedBy" />
+                <ScalarProperty Name="ModifedDate" ColumnName="ModifedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Mst_Advertise">
+            <EntityTypeMapping TypeName="ERPDbModel.tbl_Mst_Advertise">
+              <MappingFragment StoreEntitySet="tbl_Mst_Advertise">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="fkSubCategory" ColumnName="fkSubCategory" />
+                <ScalarProperty Name="Add_Id" ColumnName="Add_Id" />
+                <ScalarProperty Name="Add_Title" ColumnName="Add_Title" />
+                <ScalarProperty Name="Add_Description" ColumnName="Add_Description" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Selling_Price" ColumnName="Selling_Price" />
+                <ScalarProperty Name="IsMobileView" ColumnName="IsMobileView" />
+                <ScalarProperty Name="Geo_Lat" ColumnName="Geo_Lat" />
+                <ScalarProperty Name="Geo_Long" ColumnName="Geo_Long" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Neighbourhood" ColumnName="Neighbourhood" />
+                <ScalarProperty Name="ValidTill" ColumnName="ValidTill" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Ad_Views" ColumnName="Ad_Views" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Mst_AdvertiseImageXref">
+            <EntityTypeMapping TypeName="ERPDbModel.tbl_Mst_AdvertiseImageXref">
+              <MappingFragment StoreEntitySet="tbl_Mst_AdvertiseImageXref">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="fkAdd_Id" ColumnName="fkAdd_Id" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="ImagePath_Thumb" ColumnName="ImagePath_Thumb" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifedDate" ColumnName="ModifedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Mst_AdvertisePlans">
+            <EntityTypeMapping TypeName="ERPDbModel.tbl_Mst_AdvertisePlans">
+              <MappingFragment StoreEntitySet="tbl_Mst_AdvertisePlans">
+                <ScalarProperty Name="pkId" ColumnName="pkId" />
+                <ScalarProperty Name="PlanName" ColumnName="PlanName" />
+                <ScalarProperty Name="PlanDescription" ColumnName="PlanDescription" />
+                <ScalarProperty Name="ListingLimit" ColumnName="ListingLimit" />
+                <ScalarProperty Name="PlanValue" ColumnName="PlanValue" />
+                <ScalarProperty Name="PlanLimitInDays" ColumnName="PlanLimitInDays" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifedBy" ColumnName="ModifedBy" />
+                <ScalarProperty Name="ModifedDate" ColumnName="ModifedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -609,6 +1163,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tbl_MstRoleAccess">
+            <EntityTypeMapping TypeName="ERPDbModel.tbl_MstRoleAccess">
+              <MappingFragment StoreEntitySet="tbl_MstRoleAccess">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="fkRoleId" ColumnName="fkRoleId" />
+                <ScalarProperty Name="fkPageId" ColumnName="fkPageId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifedBy" ColumnName="ModifedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tbl_MstRoles">
             <EntityTypeMapping TypeName="ERPDbModel.tbl_MstRoles">
               <MappingFragment StoreEntitySet="tbl_MstRoles">
@@ -638,6 +1206,61 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tbl_RMASHEET">
+            <EntityTypeMapping TypeName="ERPDbModel.tbl_RMASHEET">
+              <MappingFragment StoreEntitySet="tbl_RMASHEET">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CP_NO" ColumnName="CP_NO" />
+                <ScalarProperty Name="JOB_NO" ColumnName="JOB_NO" />
+                <ScalarProperty Name="PARTY" ColumnName="PARTY" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="GRADE" ColumnName="GRADE" />
+                <ScalarProperty Name="BILLET_SIZE" ColumnName="BILLET_SIZE" />
+                <ScalarProperty Name="APPROX_TON_PENDING" ColumnName="APPROX_TON_PENDING" />
+                <ScalarProperty Name="S_PER" ColumnName="S_PER" />
+                <ScalarProperty Name="P_PER" ColumnName="P_PER" />
+                <ScalarProperty Name="LEN_FINISH_MAT" ColumnName="LEN_FINISH_MAT" />
+                <ScalarProperty Name="B" ColumnName="B" />
+                <ScalarProperty Name="ED_DATE" ColumnName="ED_DATE" />
+                <ScalarProperty Name="TDC_REF" ColumnName="TDC_REF" />
+                <ScalarProperty Name="INT_PRODUCT_STD_SERIES_NO" ColumnName="INT_PRODUCT_STD_SERIES_NO" />
+                <ScalarProperty Name="BILLET_LENGTH" ColumnName="BILLET_LENGTH" />
+                <ScalarProperty Name="NO_OF_PCS" ColumnName="NO_OF_PCS" />
+                <ScalarProperty Name="APPROX_QTY_BILLET" ColumnName="APPROX_QTY_BILLET" />
+                <ScalarProperty Name="SIZE_FOR_ROLLING" ColumnName="SIZE_FOR_ROLLING" />
+                <ScalarProperty Name="SHAPE" ColumnName="SHAPE" />
+                <ScalarProperty Name="FINISHED_SIZE" ColumnName="FINISHED_SIZE" />
+                <ScalarProperty Name="RMA_NO" ColumnName="RMA_NO" />
+                <ScalarProperty Name="HEAT_NO" ColumnName="HEAT_NO" />
+                <ScalarProperty Name="PCS" ColumnName="PCS" />
+                <ScalarProperty Name="REMARK" ColumnName="REMARK" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="RMA_DT" ColumnName="RMA_DT" />
+                <ScalarProperty Name="REPLAN" ColumnName="REPLAN" />
+                <ScalarProperty Name="DEPARTMENT" ColumnName="DEPARTMENT" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_MstSMSAPI">
+            <EntityTypeMapping TypeName="ERPDbModel.tbl_MstSMSAPI">
+              <MappingFragment StoreEntitySet="tbl_MstSMSAPI">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Base_Url" ColumnName="Base_Url" />
+                <ScalarProperty Name="Auth_Key" ColumnName="Auth_Key" />
+                <ScalarProperty Name="Sender_Id" ColumnName="Sender_Id" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifedBy" ColumnName="ModifedBy" />
+                <ScalarProperty Name="ModifedDate" ColumnName="ModifedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ELMAH_GetErrorsXml" FunctionName="ERPDbModel.Store.ELMAH_GetErrorsXml" />
+          <FunctionImportMapping FunctionImportName="ELMAH_GetErrorXml" FunctionName="ERPDbModel.Store.ELMAH_GetErrorXml" />
+          <FunctionImportMapping FunctionImportName="ELMAH_LogError" FunctionName="ERPDbModel.Store.ELMAH_LogError" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

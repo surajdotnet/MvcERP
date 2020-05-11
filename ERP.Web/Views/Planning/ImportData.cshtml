@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = "ImportData";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0 font-size-18">Import Data</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="~/Planning/ShowData?id='EXP'">Show Data</a></li>
+                    <li class="breadcrumb-item active">Import Data</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="mdi mdi-check-all mr-2"></i>
+                @TempData["Success"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+        }
+        else
+        {
+            if (TempData["Error"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="mdi mdi-block-helper mr-2"></i>
+                    @TempData["Error"]
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            }
+
+        }
+
+
+    </div>
+
+
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title">Import Data</h4>
+                <h4>Notes:</h4>
+                <p>1. .xls  .xlsx format allowed</p>
+                <p>2.Please select valid department and name your sheet as the option showing indropdown below</p>
+                <p>3.Please Remove Special Symbol like . , and white space from excel sheet header</p>
+
+                @using (Html.BeginForm("ImportData", "Planning", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="form-horizontal col-md-6 col-xs-12">
+                        <div class="form-group">
+                            <label>Select Department:</label>
+                            <select id="dep" name="dep" class="form-control">
+                                <option value="0">Please Select</option>
+                                <option  value="ALLOY">ALLOY</option>
+                                <option value="DOM">DOM</option>
+                                <option value="EXP">EXP</option>
+                                <option value="ING">ING</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Select File:</label>
+                            <input type="file" name="file" id="file" class="form-control" />
+                        </div>
+                        <input type="submit" value="Import File" class="btn btn-primary" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

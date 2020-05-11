@@ -1,0 +1,105 @@
+﻿@model ERP.Entity.Models.Extended.Advertise
+@{
+    ViewBag.Title = "PostAd";
+}
+
+<div class="banner text-center">
+    <div class="container">
+        <h1>Sell or Advertise   <span class="segment-heading">    anything online </span> with Resale</h1>
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+        <a href="~/WebSpace/Advertise/PostAd">Post Free Ad</a>
+    </div>
+</div>
+<!-- Submit Ad -->
+<div class="submit-ad main-grid-border">
+    <div class="container">
+
+        <h2 class="head">Post an Ad</h2>
+        <div class="post-ad-form">
+            @using (Html.BeginForm("PostAd", "Advertise"))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <label>Select Category <span>*</span></label>
+                @Html.DropDownList("fkCategoryId", new SelectList(ViewBag.Category, "pkId", "CategoryName"), "Please select")
+                <div class="clearfix"></div>
+
+                <label>Select Sub Category <span>*</span></label>
+                <select id="fkSubCategory" name="fkSubCategory"></select>
+                <div class="clearfix"></div>
+                <label>Ad Title <span>*</span></label>
+                @Html.EditorFor(model => model.Add_Title)
+                <div class="clearfix"></div>
+                <label>Ad Description <span>*</span></label>
+                @Html.TextAreaFor(model => model.Add_Description)
+                <div class="clearfix"></div>
+                <label>Brand</label>
+                @Html.EditorFor(model => model.Brand)
+                <div class="clearfix"></div>
+                <label>Model</label>
+                @Html.EditorFor(model => model.Model)
+                <div class="clearfix"></div>
+                <label>Year</label>
+                @Html.EditorFor(model => model.Year)
+                <div class="clearfix"></div>
+                <label>Price</label>
+                @Html.EditorFor(model => model.Selling_Price)
+                <div class="clearfix"></div>
+
+                @Html.HiddenFor(model => model.Geo_Lat)
+                @Html.HiddenFor(model => model.Geo_Long)
+
+                <label>State</label>
+                @Html.EditorFor(model => model.State)
+                <div class="clearfix"></div>
+
+                <label>City</label>
+                @Html.EditorFor(model => model.City)
+                <div class="clearfix"></div>
+
+
+                <label>Neibhourhood</label>
+                @Html.EditorFor(model => model.Neighbourhood)
+                <div class="clearfix"></div>
+
+
+
+                
+                <div class="personal-details">
+
+                    <p class="post-terms"> <strong> @Html.CheckBoxFor(model => model.IsMobileView)do you want to show your mobile in this add </strong></p>
+
+
+
+                    <input type="submit" value="Post">
+                    <div class="clearfix"></div>
+
+                </div>
+            }
+        </div>
+        <div>
+        </div>
+    </div>
+
+    <!-- // Submit Ad -->
+
+</div>
+<script type="text/javascript">
+    $("#fkCategoryId").change(function () {
+        $.getJSON("/Advertise/GetSubCat/" + $("#fkCategoryId").val(), function (data) {
+            $.each(data, function (key, val) {
+                $('#fkSubCategory')
+                    .append($("<option></option>")
+                        .attr("value", val.pkId)
+                        .text(val.SubCategoryName));
+            });
+        });
+    });
+
+
+
+    document.getElementById("fileselect").onchange = function () {
+        document.getElementById("fileuploadform").submit();
+    }
+
+</script>

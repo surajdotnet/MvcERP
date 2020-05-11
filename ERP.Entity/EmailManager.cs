@@ -43,7 +43,7 @@ namespace ERP.Entity
             }
             catch (Exception ex)
             {
-                return rsp = Convert.ToString(ex);
+                return rsp = Convert.ToString(ex.Message);
             }
 
         }

@@ -1,0 +1,88 @@
+﻿@using ERP.Entity.Models
+@model tbl_MstCategory
+
+
+@{
+    ViewBag.Title = "Category";
+}
+<script src="~/Content/WebSpace/js/bootstrap.min.js"></script>
+<script src="~/Content/WebSpace/js/bootstrap-select.js"></script>
+<link rel="stylesheet" type="text/css" href="~/Content/WebSpace/css/easy-responsive-tabs.css " />
+<script src="~/Content/WebSpace/js/easyResponsiveTabs.js"></script>
+
+<div class="categories-section main-grid-border">
+    <div class="container">
+        <h2 class="head">Main Categories</h2>
+        <div class="category-list">
+            <div id="parentVerticalTab">
+                <ul class="resp-tabs-list hor_1">
+                    @foreach (var item in ViewBag.CategoryList)
+                    {
+                        <li>@item.CategoryName</li>
+                    }
+                    <a href="#">All Ads</a>
+                </ul>
+                <div class="resp-tabs-container hor_1">
+                    @foreach (var item in ViewBag.CategoryList)
+                    {
+                        <div>
+                            <div class="category">
+                                <div class="category-img">
+                                    <div class="focus-image"><i class="@item.CategoryDescription"></i></div>
+                                </div>
+                                <div class="category-info">
+                                    <h4>@item.CategoryName</h4>
+                                    <span>####### Ads</span>
+                                    <a href="#">View all Ads</a>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="sub-categories">
+                                <ul>
+                                    @{
+                                        using (ERP.Entity.Models.ERPDbEntities db = new ERP.Entity.Models.ERPDbEntities())
+                                        {
+                                            int id = item.pkId;
+                                            var collection = db.tbl_MstSubCategory.Where(x=>x.fkCategoryId== id && x.IsActive==1).ToList();
+                                            foreach (var item2 in collection)
+                                            {
+                                                <li><a href="~/WebSpace/Classifieds/CategorySubCategoryAllAds?Category=@item.CategoryName&SubCategory=@item2.SubCategoryName"> @item2.SubCategoryName </a></li>
+                                            }
+                                        }
+
+                                    }
+
+
+
+
+                                </ul>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Plug-in Initialisation-->
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        //Vertical Tab
+        $('#parentVerticalTab').easyResponsiveTabs({
+            type: 'vertical', //Types: default, vertical, accordion
+            width: 'auto', //auto or any width like 600px
+            fit: true, // 100% fit in a container
+            closed: 'accordion', // Start closed if in accordion view
+            tabidentify: 'hor_1', // The tab groups identifier
+            activate: function (event) { // Callback function if tab is switched
+                var $tab = $(this);
+                var $info = $('#nested-tabInfo2');
+                var $name = $('span', $info);
+                $name.text($tab.text());
+                $info.show();
+            }
+        });
+    });
+</script>

@@ -1,0 +1,91 @@
+﻿@using ERP.Entity
+@model UserDetail
+
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<div id="page-wrapper" class="sign-in-wrapper">
+    <div class="graphs">
+        <div class="sign-up">
+            <h1>Create an account</h1>
+            <p class="creating">
+                Having hands on experience in creating innovative designs,I do offer design
+                solutions which harness.
+            </p>
+            <h2>Personal Information</h2>
+
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Success!</strong>   @TempData["Success"]
+                </div>
+            }
+            else
+            {
+                if (TempData["Error"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Error!</strong>  @TempData["Error"]
+                    </div>
+                }
+            }
+
+
+            @using (Html.BeginForm("Register", "Home"))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="sign-u">
+                    <div class="sign-up1">
+                        <h4>Full Name:</h4>
+                    </div>
+                    <div class="sign-up2">
+
+                        <input type="text" placeholder="Full Name" required="" id="FullName" name="FullName" />
+
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="sign-u">
+                    <div class="sign-up1">
+                        <h4>Mobile No* :</h4>
+                    </div>
+                    <div class="sign-up2">
+
+                        <input type="text" placeholder="Mobile No." required="" id="Mobile_Primary" name="Mobile_Primary" />
+
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="sign-u">
+                    <div class="sign-up1">
+                        <h4>Email Id* :</h4>
+                    </div>
+                    <div class="sign-up2">
+
+                        <input type="text" placeholder="Enter Email Address" required="" id="Email_Primary" name="Email_Primary" />
+
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+
+                <div class="sub_home">
+                    <div class="sub_home_left">
+
+                        <input type="submit" value="Create Account">
+
+                    </div>
+                    <div class="sub_home_right">
+                        <p>Go Back to <a href="~/WebSpace/Home/index">Home</a></p>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

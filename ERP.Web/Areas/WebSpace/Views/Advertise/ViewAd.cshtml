@@ -1,0 +1,146 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "ViewAd";
+}
+
+<link href="~/Content/WebSpace/css/flexslider.css" rel="stylesheet" />
+
+<script src="~/Content/WebSpace/js/jquery.flexslider.js"></script>
+@if (ViewBag.Result != null)
+{
+    <div class="single-page main-grid-border">
+        <div class="container">
+            <ol class="breadcrumb" style="margin-bottom: 5px;">
+                <li>@Html.ActionLink("Home","Index","Home")</li>
+                <li><a href="~/WebSpace/Classified/CategoryAllAds?Category=All">All Ads</a></li>
+                <li class="active"><a href="~/WebSpace/Classified/CategoryAllAds?Category=@ViewBag.Result.tbl_MstSubCategory.tbl_MstCategory.CategoryName">@ViewBag.Result.tbl_MstSubCategory.tbl_MstCategory.CategoryName</a></li>
+                <li class="active">
+                    <a href="~/WebSpace/Classifieds/CategorySubCategoryAllAds?Category=@ViewBag.Result.tbl_MstSubCategory.tbl_MstCategory.CategoryName&SubCategory=@ViewBag.Result.tbl_MstSubCategory.SubCategoryName"> @ViewBag.Result.tbl_MstSubCategory.SubCategoryName </a>
+                </li>
+            </ol>
+            <div class="product-desc">
+                <div class="col-md-7 product-view">
+                    <h2>@ViewBag.Result.Add_Title</h2>
+                    <p> <i class="glyphicon glyphicon-map-marker"></i><a href="#">@ViewBag.Result.State</a>, <a href="#">@ViewBag.Result.City</a>| Added on @ViewBag.Result.CreatedDate, Ad ID: @ViewBag.Result.Add_Id</p>
+                    <div class="flexslider">
+                        <ul class="slides">
+                            @using (ERP.Entity.Models.ERPDbEntities db = new ERP.Entity.Models.ERPDbEntities())
+                            {
+                                int id = ViewBag.Result.Id;
+                                var ImageResult = db.tbl_Mst_AdvertiseImageXref.Where(x => x.fkAdd_Id == id).ToList();
+                                foreach (var item in ImageResult)
+                                {
+                                    if (@item.ImagePath != null)
+                                    {
+                                        string imagepath = @item.ImagePath;
+                                        imagepath = "../../.." + imagepath.Substring(1);
+                                        <li data-thumb="@imagepath">
+                                            <img src="@imagepath" />
+                                        </li>
+                                    }
+
+                                }
+
+                            }
+                        </ul>
+                    </div>
+                    <!-- FlexSlider -->
+                    <!-- FlexSlider -->
+
+
+                    <script>
+                        // Can also be used with $(document).ready()
+                        $(window).load(function () {
+                            $('.flexslider').flexslider({
+                                animation: "slide",
+                                controlNav: "thumbnails"
+                            });
+                        });
+                    </script>
+                    <!-- //FlexSlider -->
+                    <div class="product-details">
+                        <h4>Views : <strong>@ViewBag.Result.Ad_Views</strong></h4>
+                       
+                        <p><strong>Description</strong> : @ViewBag.Result.Add_Description</p>
+
+                    </div>
+                </div>
+                <div class="col-md-5 product-details-grid">
+                    <div class="item-price">
+                        <div class="product-price">
+                            <p class="p-price">Price</p>
+                            <h3 class="rate">₹ @ViewBag.Result.Selling_Price</h3>
+                            <div class="clearfix"></div>
+                        </div>
+                        @if (@ViewBag.Result.Brand != null || @ViewBag.Result.Brand != "")
+                        {
+                            <div class="condition">
+                                <p class="p-price">Brand</p>
+                                <h4>@ViewBag.Result.Brand</h4>
+                                <div class="clearfix"></div>
+                            </div>
+                        }
+                        @if (@ViewBag.Result.Model != null || @ViewBag.Result.Model != "")
+                        {
+                            <div class="condition">
+                                <p class="p-price">Model</p>
+                                <h4>@ViewBag.Result.Model</h4>
+                                <div class="clearfix"></div>
+                            </div>
+                        }
+                        @if (@ViewBag.Result.Year != null || @ViewBag.Result.Year != "")
+                        {
+                            <div class="condition">
+                                <p class="p-price">Year</p>
+                                <h4>@ViewBag.Result.Year</h4>
+                                <div class="clearfix"></div>
+                            </div>
+                        }
+                    </div>
+                    <div class="interested text-center">
+                        <h4>Interested in this Ad?<small> Contact the Seller!</small></h4>
+
+                        <p>
+                            @if (@ViewBag.Result.IsMobileView == 1)
+                            {
+                                <i class="glyphicon glyphicon-earphone"></i>
+                                
+                                @ViewBag.Result.IsMobileView
+                            }
+                        </p>
+                        <p>
+
+                            <input type="submit" value="Make an Offer" />
+                        </p>
+                    
+    
+                        </div>
+    
+                        <div class="tips">
+                        <h4>Safety Tips for Buyers</h4>
+                        <ol>
+                            <li><a href="#">Contrary to popular belief.</a></li>
+                            <li><a href="#">Contrary to popular belief.</a></li>
+                            <li><a href="#">Contrary to popular belief.</a></li>
+                            <li><a href="#">Contrary to popular belief.</a></li>
+                            <li><a href="#">Contrary to popular belief.</a></li>
+                            <li><a href="#">Contrary to popular belief.</a></li>
+                            <li><a href="#">Contrary to popular belief.</a></li>
+                            <li><a href="#">Contrary to popular belief.</a></li>
+                            <li><a href="#">Contrary to popular belief.</a></li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <!--//single-page-->
+}
+else
+{
+    <h3>Something wrong</h3>
+}
+

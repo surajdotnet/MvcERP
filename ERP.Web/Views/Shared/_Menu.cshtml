@@ -1,0 +1,75 @@
+﻿@{
+    using (ERP.Entity.Models.ERPDbEntities db = new ERP.Entity.Models.ERPDbEntities())
+    {
+        if (User.Identity.IsAuthenticated)
+        {
+            var collection_Menu = (from t1 in db.tbl_MstAccessMainMenu
+                                   join t2 in db.tbl_MstAccessPages on t1.fkPageId equals t2.pkPageId
+                                  
+                                   select new
+                                   {
+                                       t1.pkMainMenuId,
+                                       t1.MenuName,
+                                       t1.fkPageId,
+                                       t2.PageUrl
+                                   }
+                                          ).ToList();
+
+          
+            foreach (var item in collection_Menu)
+            {
+                var collection_SubMenu = (from t1 in db.tbl_MstAccessSubMenu
+                                          join t2 in db.tbl_MstAccessPages on t1.fkPageId equals t2.pkPageId
+                                          where t1.fkMenuId == item.pkMainMenuId
+                                          select new
+                                          {
+                                              t1.pkSubMenuId,
+                                              t1.SubMenuName,
+                                              t1.fkPageId,
+                                              t2.PageUrl
+                                          }
+                                          ).ToList();
+
+                if (collection_SubMenu.Count > 0)
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="@item.PageUrl" id="topnav-layout" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="bx bx-folder mr-2"></i>@item.MenuName<div class="arrow-down"></div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="topnav-layout">
+                            @foreach (var item2 in collection_SubMenu)
+                            {
+                                int id = Convert.ToInt32(User.Identity.Name);
+                                var user = db.tbl_MstMerchantsRoleXref.Where(x => x.fkMerchantId == id && x.IsActive==1).FirstOrDefault();
+                                var Result = db.tbl_MstRoleAccess.Where(x => x.fkPageId == item2.fkPageId && x.IsActive == 1 && x.fkRoleId == user.fkRoleId).FirstOrDefault();
+                                if (Result != null)
+                                {
+                                    <a href="@item2.PageUrl" class='dropdown-item'><i class="bx bx-right-arrow-alt mr-2"></i> @item2.SubMenuName</a>
+                                }
+
+                            }
+                        </div>
+                    </li>
+                }
+                else
+                {
+                    int id = Convert.ToInt32(User.Identity.Name);
+                    var user = db.tbl_MstMerchantsRoleXref.Where(x => x.fkMerchantId == id && x.IsActive == 1).FirstOrDefault();
+                    var Result = db.tbl_MstRoleAccess.Where(x => x.fkPageId == item.fkPageId && x.IsActive == 1 && x.fkRoleId == user.fkRoleId).FirstOrDefault();
+
+                    if (Result != null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@item.PageUrl">
+                                <i class="bx bx-folder mr-2"></i>@item.MenuName
+                            </a>
+                        </li>
+                    }
+                }
+            }
+        }
+    }
+
+
+}

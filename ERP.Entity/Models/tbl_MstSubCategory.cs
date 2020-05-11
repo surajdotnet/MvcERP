@@ -14,6 +14,12 @@ namespace ERP.Entity.Models
     
     public partial class tbl_MstSubCategory
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tbl_MstSubCategory()
+        {
+            this.tbl_Mst_Advertise = new HashSet<tbl_Mst_Advertise>();
+        }
+    
         public int pkId { get; set; }
         public Nullable<int> fkCategoryId { get; set; }
         public string SubCategoryName { get; set; }
@@ -24,6 +30,8 @@ namespace ERP.Entity.Models
         public Nullable<System.DateTime> ModifedDate { get; set; }
         public Nullable<int> IsActive { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_Mst_Advertise> tbl_Mst_Advertise { get; set; }
         public virtual tbl_MstCategory tbl_MstCategory { get; set; }
     }
 }

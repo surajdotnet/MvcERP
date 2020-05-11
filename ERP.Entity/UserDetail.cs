@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ERP.Entity
 {
-    class UserDetail
+  public  class UserDetail
     {
         public string Title { get; set; }
         public string FirstName { get; set; }

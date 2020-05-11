@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+}
+
+<div class="main-banner banner text-center">
+    <div class="container">
+        <h1>Sell or Advertise   <span class="segment-heading">    anything online </span> with Resale</h1>
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+        @Html.ActionLink("Post Free Ad","PostAd","Advertise")
+    </div>
+</div>
+
+<div class="categories">
+    <div class="container">
+        @foreach (var item in ViewBag.Result_Category)
+        {
+            <div class="col-md-2 focus-grid">
+                <a href="~/WebSpace/Classifieds/Category?Category=@item.CategoryName">
+                    <div class="focus-border">
+                        <div class="focus-layout">
+                            <div class="focus-image"><i class="@item.CategoryDescription"></i></div>
+                            <h4 class="clrchg">@item.CategoryName</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+
+    </div>
+</div>
+
+<div class="trending-ads">
+    <div class="container">
+        <!-- slider -->
+        <div class="trend-ads">
+            <h2>Latest Ads</h2>
+            <ul id="flexiselDemo3">
+                <li>
+                    @foreach (var item in ViewBag.TopTenAds)
+                    {
+                        <div class="col-md-3 biseller-column">
+                            <a href="/WebSpace/Advertise/ViewAd/@item.Add_Id">
+
+                                @{
+                                    using (ERP.Entity.Models.ERPDbEntities db = new ERP.Entity.Models.ERPDbEntities())
+                                    {
+                                        int id = item.Id;
+                                        var image = db.tbl_Mst_AdvertiseImageXref.Where(x => x.fkAdd_Id == id).FirstOrDefault();
+
+                                        if (image.ImagePath != null)
+                                        {
+                                            string imagepath = image.ImagePath;
+                                            imagepath = "../../.." + imagepath.Substring(1);
+                                            <img src="@imagepath">
+                                        }
+
+                                    }
+                                }
+                                <span class="price">₹ @item.Selling_Price</span>
+                            </a>
+                            <div class="ad-info">
+                                <h5>@item.Add_Title</h5>
+                                <span>posted on @item.CreatedDate</span>
+                            </div>
+                        </div>
+
+                    }
+                </li>
+
+            </ul>
+            <script type="text/javascript">
+                $(window).load(function () {
+                    $("#flexiselDemo3").flexisel({
+                        visibleItems: 1,
+                        animationSpeed: 1000,
+                        autoPlay: true,
+                        autoPlaySpeed: 5000,
+                        pauseOnHover: true,
+                        enableResponsiveBreakpoints: true,
+                        responsiveBreakpoints: {
+                            portrait: {
+                                changePoint: 480,
+                                visibleItems: 1
+                            },
+                            landscape: {
+                                changePoint: 640,
+                                visibleItems: 1
+                            },
+                            tablet: {
+                                changePoint: 768,
+                                visibleItems: 1
+                            }
+                        }
+                    });
+
+                });
+            </script>
+            <script type="text/javascript" src="~/Content/WebSpace/js/jquery.flexisel.js"></script>
+
+        </div>
+    </div>
+    <!-- //slider -->
+</div>

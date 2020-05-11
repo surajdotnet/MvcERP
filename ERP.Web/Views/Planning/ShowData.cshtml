@@ -1,0 +1,300 @@
+﻿@{
+    ViewBag.Title = "ShowData";
+}
+
+<style>
+    .nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
+        color: #fff;
+        background-color: #337ab7;
+    }
+
+    .nav-pills > li > a {
+        border-radius: 4px;
+    }
+
+    .nav > li > a {
+        position: relative;
+        display: block;
+        padding: 10px 15px;
+    }
+
+    a {
+        color: #337ab7;
+        text-decoration: none;
+    }
+
+    a {
+        background-color: transparent;
+    }
+
+    * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+
+
+    user agent stylesheet
+    li {
+        text-align: -webkit-match-parent;
+    }
+
+    .nav {
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+    }
+</style>
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0 font-size-18">Show Data</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="~/Planning/ShowData">Show Data</a></li>
+                    <li class="breadcrumb-item active">ERP</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="mdi mdi-check-all mr-2"></i>
+                @TempData["Success"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+        }
+        else
+        {
+            if (TempData["Error"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="mdi mdi-block-helper mr-2"></i>
+                    @TempData["Error"]
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            }
+        }
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="card">
+        <div class="card-body">
+            <h4>Showing Data for </h4>
+            <ul class="nav nav-pills">
+                <li id="ALLOYS"><a href="~/Planning/ShowData?id=ALLOYS">ALLOY</a></li>
+                <li id="DOM"><a href="~/Planning/ShowData?id=DOM">DOM</a></li>
+                <li id="EXP"><a href="~/Planning/ShowData?id=EXP">EXP</a></li>
+                <li id="ING"><a href="~/Planning/ShowData?id=ING">ING</a></li>
+            </ul>
+            <div class="col-md-12 table-responsive">
+                <table class="table table-bordered" style="font-size:10px; font-family:Calibri;">
+                    <thead>
+                        <tr>
+                            <th index=0>CP NO<div class="filter"></div></th>
+                            <th index=1>JOB NO<div class="filter"></div></th>
+                            <th index=2>PARTY<div class="filter"></div></th>
+                            <th index=3>UID<div class="filter"></div></th>
+                            <th index=4>GRADE<div class="filter"></div></th>
+                            <th index=5>
+                                Billet Size<div class="filter"></div>
+                            </th>
+                            <th index=6>
+                                Approx Ton pending<div class="filter"></div>
+                            </th>
+                            <th index=7>
+                                S%<div class="filter"></div>
+                            </th>
+                            <th index=8>
+                                P%<div class="filter"></div>
+                            </th>
+                            <th index=9>
+                                Length of finished material<div class="filter"></div>
+                            </th>
+                            <th index=10>
+                                B<div class="filter"></div>
+                            </th>
+                            <th index=11>
+                                ED DATE<div class="filter"></div>
+                            </th>
+                            <th index=12>
+                                TDC Ref<div class="filter"></div>
+                            </th>
+                            <th index=13>
+                                Internal Product Standard series No<div class="filter"></div>
+                            </th>
+                            <th index=14>
+                                Billet Length<div class="filter"></div>
+                            </th>
+                            <th index=15>
+                                No of Pcs<div class="filter"></div>
+                            </th>
+                            <th index=16>
+                                Apprx Qty of Billet<div class="filter"></div>
+                            </th>
+                            <th index=17>
+                                Size for Rolling<div class="filter"></div>
+                            </th>
+                            <th index=18>
+                                shape<div class="filter"></div>
+                            </th>
+                            <th index=19>
+                                Finished size<div class="filter"></div>
+                            </th>
+                            <th index=20>
+                                RMA No<div class="filter"></div>
+                            </th>
+                            <th index=21>
+                                Heat No<div class="filter"></div>
+                            </th>
+                            <th index=22>
+                                pcs<div class="filter"></div>
+                            </th>
+                            <th>
+                                Remarks<div class="filter"></div>
+                            </th>
+                            <th index=23>
+                                Status<div class="filter"></div>
+                            </th>
+                            <th index=24>
+                                RMA dt<div class="filter"></div>
+                            </th>
+                            <th index=25>
+                                REPLAN<div class="filter"></div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.Result != null)
+                        {
+                            foreach (var item in ViewBag.Result)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.CP_NO
+                                    </td>
+                                    <td>
+                                        @item.JOB_NO
+                                    </td>
+                                    <td>
+                                        @item.PARTY
+                                    </td>
+                                    <td>
+                                        @item.UID
+                                    </td>
+                                    <td>
+                                        @item.GRADE
+                                    </td>
+                                    <td>
+                                        @item.BILLET_SIZE
+                                    </td>
+                                    <td>
+                                        @item.APPROX_TON_PENDING
+                                    </td>
+                                    <td>
+                                        @item.S_PER
+                                    </td>
+                                    <td>
+                                        @item.P_PER
+                                    </td>
+                                    <td>
+                                        @item.LEN_FINISH_MAT
+                                    </td>
+                                    <td>
+                                        @item.B
+                                    </td>
+                                    <td>
+                                        @item.ED_DATE
+                                    </td>
+                                    <td>
+                                        @item.TDC_REF
+                                    </td>
+                                    <td>
+                                        @item.INT_PRODUCT_STD_SERIES_NO
+                                    </td>
+                                    <td>
+                                        @item.BILLET_LENGTH
+                                    </td>
+                                    <td>
+                                        @item.NO_OF_PCS
+                                    </td>
+                                    <td>
+                                        @item.APPROX_QTY_BILLET
+                                    </td>
+                                    <td>
+                                        @item.SIZE_FOR_ROLLING
+                                    </td>
+                                    <td>
+                                        @item.SHAPE
+                                    </td>
+                                    <td>
+                                        @item.FINISHED_SIZE
+                                    </td>
+                                    <td>
+                                        @item.RMA_NO
+                                    </td>
+                                    <td>
+                                        @item.HEAT_NO
+                                    </td>
+                                    <td>
+                                        @item.PCS
+                                    </td>
+                                    <td>
+                                        @item.REMARK
+                                    </td>
+                                    <td>
+                                        @item.STATUS
+                                    </td>
+                                    <td>
+                                        @item.RMA_DT
+                                    </td>
+                                    <td>
+                                        @item.REPLAN
+                                    </td>
+                                    <td>
+                                        @item.DEPARTMENT
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function getUrlVars() {
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for (var i = 0; i < hashes.length; i++) {
+            hash = hashes[i].split('=');
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1];
+        }
+        return vars;
+    }
+
+    var id = getUrlVars()["id"];
+    $("#" + id).addClass('active');
+</script>
