@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>@ViewBag.Title - Unique Enterprises</title>
+    <title>@ViewBag.Title - My Classifieds</title>
     <link rel="stylesheet" href="~/Content/WebSpace/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/Content/WebSpace/css/bootstrap-select.css">
     <link href="~/Content/WebSpace/css/style.css" rel="stylesheet" type="text/css" media="all" />
@@ -41,12 +41,10 @@
     <div class="header">
         <div class="container">
             <div class="logo">
-                <a href="~/WebSpace/Home/Index"><span>Unique</span>Enterprises</a>
+                <a href="@Url.Action("Index", "Home")"><span>My Classifieds</span></a>
             </div>
             <div class="header-right">
 
-
-                @*<span class="active uls-trigger"><i class="glyphicon glyphicon-map-marker"></i> Ghaziabad</span>*@
                 @if (User.Identity.IsAuthenticated)
                 {
                     using (ERP.Entity.Models.ERPDbEntities db = new ERP.Entity.Models.ERPDbEntities())
@@ -67,8 +65,8 @@
                                 <ul class="dropdown-menu">
                                     <li>@Html.ActionLink("Post New Ad", "PostAd", "Advertise")</li>
                                     <li>@Html.ActionLink("My Ads", "MyAds", "Advertise")</li>
-                                    <li><a href="#">My Account</a></li>
-                                    <li><a href="#">Change password</a></li>
+                                    <li>@Html.ActionLink("My Account", "Account", "Home")</li>
+                                    <li>@Html.ActionLink("Change Password", "Change Password", "Home")</li>
                                     <li>@Html.ActionLink("Log Out", "Logout", "Home")</li>
                                 </ul>
                             </div>
@@ -78,8 +76,8 @@
                 else
                 {
                     <div class="selectregion">
-                        @Html.ActionLink("Login", "Login", "Home", new { @class = "btn btn-primary" })
-                        @Html.ActionLink("Register", "Register", "Home", new { @class = "btn btn-primary" })
+                        <a href="@Url.Action("Login", "Home")" class = "btn btn-primary">Login</a>
+                        <a href="@Url.Action("Register", "Home")" class = "btn btn-primary">Register</a>
 
                     </div>
                 }

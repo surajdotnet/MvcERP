@@ -1,8 +1,10 @@
 ﻿using ERP.Entity;
 using ERP.Entity.Models;
+using ERP.Entity.Models.Extended;
 using ERP.Web.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -16,9 +18,10 @@ namespace ERP.Web.Areas.WebSpace.Controllers
         public ERPDbEntities db = new ERPDbEntities();
         // GET: WebSpace/Home
         public ActionResult Index()
+        
         {
             ViewBag.Result_Category = db.tbl_MstCategory.Where(x => x.IsActive == 1).ToList();
-            var items = db.tbl_Mst_Advertise.OrderByDescending(x => x.IsActive == 1).Take(5);
+            var items = db.tbl_Mst_Advertise.Where(x => x.IsActive == 1).ToList();
             ViewBag.TopTenAds = items;
             return View();
         }
@@ -172,10 +175,7 @@ namespace ERP.Web.Areas.WebSpace.Controllers
             {
                 return Redirect(returnUrl);
             }
-            else
-            {
-                return Redirect(returnUrl);
-            }
+            return RedirectToAction("Index");
         }
 
         public ActionResult LogOut()
@@ -188,6 +188,66 @@ namespace ERP.Web.Areas.WebSpace.Controllers
             Session.Abandon();
             return RedirectToAction("Login");
         }
-        
+        [Authorize]
+        public ActionResult Account()
+        {
+            int id = Convert.ToInt32(User.Identity.Name);
+            tbl_MstMerchants obj= db.tbl_MstMerchants.Find(id);
+            return View(obj);
+        }
+        [Authorize]
+        [HttpPost]
+        public ActionResult Account(tbl_MstMerchants obj)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    db.Entry(obj).State = EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["Success"] = "Profile Updated Successfully";
+                    return View();
+                }
+                catch (Exception ex)
+                {
+                    TempData["Error"] = ex.Message;
+                }
+              
+            
+            }
+            return View(obj);
+        }
+        [Authorize]
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+        [Authorize]
+        [HttpPost]
+        public ActionResult ChangePassword(ChangePasswordModel obj)
+        {
+            if (ModelState.IsValid)
+            {
+                int id = Convert.ToInt32(User.Identity.Name);
+                var user = db.tbl_MstMerchants.Where(x => x.pkMerchantId == id).FirstOrDefault();
+                if (user.PasswordHash == obj.OldPassword)
+                {
+                    user.PasswordHash = obj.NewPassword;
+                    db.Configuration.ValidateOnSaveEnabled = false;
+                    db.SaveChanges();
+                    TempData["Success"] = "Your Password has been changed successfully";
+                }
+                else
+                {
+                    TempData["Error"] = "Please enter your correct current password.";
+                }
+            }
+            else
+            {
+                TempData["Error"] = "Somthing went wrong";
+            }
+            return View(obj);
+
+        }
     }
 }

@@ -74,27 +74,6 @@ namespace ERP.Web.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 int id = Convert.ToInt32(User.Identity.Name);
-                //ViewBag.Result = (from t1 in db.tbl_MstMerchants
-                //                  join t2 in db.tbl_MstMerchants on t1.fkBossId equals t2.pkMerchantId
-                //                  select new
-                //                  {
-                //                      t1.pkMerchantId,
-                //                      t1.FirstName,
-                //                      t1.LastName,
-                //                      t1.FullName,
-                //                      t1.Gender,
-                //                      t1.EmployeeCode,
-                //                      t1.Department,
-                //                      t1.Designation,
-                //                      t1.Email_Primary,
-                //                      t1.Mobile_Primary,
-                //                      t1.Mobile_Alternate,
-                //                      t1.MerchantImage,
-                //                      t1.DateofBirth,
-                //                      t1.DateofJoining,
-                //                      ReportingManager = t2.FullName
-                //                  }
-                //                ).ToList();
                 ViewBag.Result = db.tbl_MstMerchants.Where(x => x.pkMerchantId == id).FirstOrDefault();
                 return View();
             }

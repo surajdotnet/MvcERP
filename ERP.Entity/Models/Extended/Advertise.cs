@@ -8,8 +8,8 @@ namespace ERP.Entity.Models.Extended
 {
     public class Advertise
     {
-        public int Id { get; set; }
-        public int fkSubCategory { get; set; }
+        public int? Id { get; set; }
+        public int? fkSubCategory { get; set; }
         public string Add_Id { get; set; }
         public string Add_Title { get; set; }
         public string Add_Description { get; set; }

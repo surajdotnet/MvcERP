@@ -1,0 +1,85 @@
+﻿@model IEnumerable<ERP.Entity.Models.tbl_MstCategory>
+
+@{
+    ViewBag.Title = "List Category";
+}
+
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0 font-size-18">Category</h4>
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+               
+                    <li>
+                        @Html.ActionLink("Create New", "Create",
+      new { controller = "Category" },
+      new { @class = "btn btn-primary waves-effect waves-light" })
+                    </li>
+
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CategoryName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CategoryDescription)
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+                            <th></th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CategoryName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CategoryDescription)
+                                </td>
+
+                                <td>
+                                    @if (item.IsActive == 1)
+                                    {
+                                        <label class="btn btn-success btn-sm btn-rounded waves-effect waves-light">Active</label>
+                                    }
+
+                                    else
+                                    {
+                                        <label class="btn btn-danger btn-sm btn-rounded waves-effect waves-light">In-Active</label>
+                                    }
+
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Edit", "Category", new { id = item.pkId })" class="btn btn-success btn-sm waves-effect waves-light">
+                                        <i class="bx bx-pencil"></i>
+                                    </a>
+                           
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
