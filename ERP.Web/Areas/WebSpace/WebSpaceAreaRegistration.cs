@@ -17,7 +17,7 @@ namespace ERP.Web.Areas.WebSpace
             context.MapRoute(
                 "WebSpace_default",
                 "WebSpace/{controller}/{action}/{id}",
-                new { Controller="Home", action = "Index", id = UrlParameter.Optional }
+                new { Controller= "Home", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

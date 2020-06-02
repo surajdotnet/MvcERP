@@ -49,13 +49,19 @@ namespace ERP.Web.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             //var result = "";
-            var result = db.tbl_MstMerchants.Where(x => x.Email_Primary == model.UserName || x.Mobile_Primary == model.UserName && x.PasswordHash == model.Password).FirstOrDefault();
-            FormsAuthentication.SetAuthCookie(Convert.ToString(result.pkMerchantId), model.RememberMe);
-            Session["User"] = result;
-            if (result.IsActive == 1)
+            var result = db.tbl_MstMerchants.Where(x =>( x.Email_Primary == model.UserName || x.Mobile_Primary == model.UserName) && x.PasswordHash == model.Password && x.IsActive==1).FirstOrDefault();
+           
+            if (result != null)
+            {
+                FormsAuthentication.SetAuthCookie(Convert.ToString(result.pkMerchantId), model.RememberMe);
+                Session["User"] = result;
                 return RedirectToLocal(returnUrl);
+            }
             else
-                ModelState.AddModelError("", "Invalid login attempt.");
+            {
+
+                ModelState.AddModelError("", "No account associated with this uername/password");
+            }
             return View(model);
         }
 
